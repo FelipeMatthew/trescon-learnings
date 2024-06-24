@@ -42,5 +42,4 @@ func main() {
 	for index, value := range numbs {
 		fmt.Printf("index:%d \n value: %d", index, value)
 	}
-
 }
