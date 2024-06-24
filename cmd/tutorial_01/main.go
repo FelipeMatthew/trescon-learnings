@@ -5,11 +5,6 @@ import (
 	"unicode/utf8"
 )
 
-func foo(){
-	fmt.Println("hi im foo")
-	return
-}
-
 func main() {
 	// fmt.Println("Hello world")
 
@@ -45,7 +40,7 @@ func main() {
 	// Default value of numbers is 0 and bool is false
 
 
-	var strangerFunction string = foo()
+	var strangerFunction = ""
 	fmt.Println(strangerFunction)
 
 	var1, var2 := 1, 3
