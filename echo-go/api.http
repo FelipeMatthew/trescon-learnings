@@ -1,0 +1,21 @@
+GET http://localhost:8000/
+
+###
+
+POST http://localhost:8000/car
+Content-Type: application/json
+
+{
+  "name": "",
+  "year": 0, 
+}
+
+###
+
+POST http://localhost:8000/moto
+Content-Type: application/json
+
+{
+  "name": "motoca",
+  "year": 20, 
+}

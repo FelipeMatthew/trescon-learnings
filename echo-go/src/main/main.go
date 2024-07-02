@@ -17,5 +17,9 @@ func main() {
 	e.GET("/", functions.GettingStart)
 	e.GET("/person/:data", functions.GetPerson)
 
+	// Requests
+	e.POST("/car", functions.AddCar)
+	e.POST("/moto", functions.AddMoto)
+
 	e.Start(":8000")
 }
