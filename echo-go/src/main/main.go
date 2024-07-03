@@ -20,6 +20,7 @@ func main() {
 	// Requests
 	e.POST("/car", functions.AddCar)
 	e.POST("/moto", functions.AddMoto)
+	e.POST("/dog", functions.AddDog)
 
 	e.Start(":8000")
 }

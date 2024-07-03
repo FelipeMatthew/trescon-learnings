@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "name": "",
-  "year": 0, 
+  "year": 0
 }
 
 ###
@@ -17,5 +17,15 @@ Content-Type: application/json
 
 {
   "name": "motoca",
-  "year": 20, 
+  "year": 20
+}
+
+###
+
+POST http://localhost:8000/dog
+Content-Type: application/json
+
+{
+  "name": "pintado",
+  "breed": "dalmata"
 }
