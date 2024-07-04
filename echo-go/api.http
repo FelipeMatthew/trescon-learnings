@@ -33,3 +33,13 @@ Content-Type: application/json
 
 ### Middlewares
 GET http://localhost:8000/admin/main
+
+### 
+GET http://localhost:8000/admin/main
+Content-Type: application/json
+Authorization: Basic dXNlcjpwYXNzd29yZA==
+
+{
+  "username": "felpola",
+  "password": "123"
+}
