@@ -15,6 +15,8 @@ func main() {
 
 	e := echo.New()
 
+	e.Use(middlewares.ServerHeader)
+
 	e.GET("/", functions.GettingStart)
 	e.GET("/person/:data", functions.GetPerson)
 
@@ -27,9 +29,9 @@ func main() {
 	g := e.Group("/admin")
 
 	// Can use
-	// g.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-	// 	Format: `[${time_rfc339}] ${status} ${method} ${host}${path} ${latency_human}` + "\n",
-	// }))
+	g.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: `[${time_rfc339}] ${status} ${method} ${host}${path} ${latency_human}` + "\n",
+	}))
 
 	g.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		if username == "felpola" && password == "123" {
