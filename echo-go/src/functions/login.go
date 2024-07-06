@@ -1,9 +1,11 @@
 package functions
 
 import (
+	"log"
 	"net/http"
 	"time"
 
+	"github.com/FelipeMatthew/go-learnings/src/middlewares"
 	"github.com/labstack/echo"
 )
 
@@ -22,8 +24,27 @@ func Login(c echo.Context) error {
 
 		c.SetCookie(cookie)
 
-		return c.String(http.StatusOK, "You are logged in!")
+		// JWT token
+		token, err := middlewares.CreateJwtToken()
+		if err != nil {
+			log.Println("error creating the jwt token", err)
+			return c.String(http.StatusInternalServerError, "Error to create jwt token")
+		}
+
+		// JWT cookie 
+		jwtCookie := &http.Cookie{}
+
+		jwtCookie.Name = "JWTCookie"
+		jwtCookie.Value = token
+		jwtCookie.Expires = time.Now().Add(48 * time.Hour)
+
+		c.SetCookie(jwtCookie)
+
+		return c.JSON(http.StatusOK, map[string]string{
+			"message": "You are logged in!",
+			"token":   token,
+		})
 	}
 
-	return c.String(http.StatusOK, "Invalid credentials, try again")
+	return c.String(http.StatusInternalServerError, "Invalid credentials, try again")
 }

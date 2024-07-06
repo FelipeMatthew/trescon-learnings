@@ -21,7 +21,6 @@ func main() {
 	e.GET("login", functions.Login)
 	e.GET("/person/:data", functions.GetPerson)
 
-	// Requests
 	e.POST("/car", functions.AddCar)
 	e.POST("/moto", functions.AddMoto)
 	e.POST("/dog", functions.AddDog)
@@ -49,6 +48,18 @@ func main() {
 	cookieGroup.Use(middlewares.CheckCookie)
 
 	cookieGroup.GET("/main", middlewares.MainCookie)
+
+	// JWT 
+
+	jwtGroup := e.Group("/jwt")
+
+	jwtGroup.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningMethod: "HS512",
+		SigningKey: []byte("mySecret"),
+		TokenLookup: "cookie:JWTCookie",
+	}))
+
+	jwtGroup.GET("/main", middlewares.MainJwt)
 
 	e.Start(":8000")
 }
