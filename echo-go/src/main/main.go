@@ -16,8 +16,9 @@ func main() {
 	e := echo.New()
 
 	e.Use(middlewares.ServerHeader)
+	e.Use(middleware.Static("./"))
 
-	e.GET("/", functions.GettingStart)
+	e.GET("/start", functions.GettingStart)
 	e.GET("login", functions.Login)
 	e.GET("/person/:data", functions.GetPerson)
 
