@@ -15,7 +15,7 @@ func GetDbType() string {
 	return DBType
 }
 
-func GetDbConnection() string {
+func GetPostgresConnectionString() string {
 	database := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
 		DBHost,
 		DBPort,
