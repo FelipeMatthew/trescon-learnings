@@ -1,4 +1,4 @@
-package middlewares
+package handlers
 
 import (
 	"net/http"
@@ -7,5 +7,5 @@ import (
 )
 
 func MainAdmin(c echo.Context) error {
-	return c.String(http.StatusOK, "My first middleware using go")
+	return c.String(http.StatusOK, "Hi from cookies context")
 }

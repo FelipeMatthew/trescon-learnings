@@ -7,12 +7,11 @@ import (
 	"github.com/labstack/echo"
 )
 
-func MainCookie(c echo.Context) error {
-	return c.String(http.StatusOK, "Hi from cookies context")
+func SetCookieMiddleware(g *echo.Group) {
+	g.Use(checkCookie)
 }
 
-// Communicating w/ login function
-func CheckCookie(next echo.HandlerFunc) echo.HandlerFunc {
+func checkCookie(next echo.HandlerFunc) echo.HandlerFunc {
 	return func (c echo.Context) error {
 			cookie, err := c.Cookie("sessionID")
 			if err != nil {
