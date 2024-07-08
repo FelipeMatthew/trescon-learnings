@@ -22,3 +22,7 @@ func NewDB(parms...string) *gorm.DB {
 
 	return DB
 }
+
+func GetDbInstance() *gorm.DB {
+	return DB
+}
