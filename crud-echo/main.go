@@ -1,16 +1,19 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/FelipeMatthew/go-learnings/crud-echo/api/routes"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	// echo instance
-	e := echo.New()
+	e := echo.New() // echo instance
 
-	// routes
-	registerRoutes(e)
+	// route
+	routes.RegisterRoutes(e)
+	fmt.Println("Hello Echo")
 
 	// middleware
 	e.Use(middleware.Logger())
@@ -18,3 +21,4 @@ func main() {
 	// run app
 	e.Start(":8080")
 }
+
