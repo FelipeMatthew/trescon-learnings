@@ -10,3 +10,7 @@ Content-Type: application/json
     "name": "Felipe Connor",
     "isActive": true
 }
+
+###
+
+GET http://localhost:8080/users/6
