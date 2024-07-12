@@ -13,7 +13,17 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/users/6
+GET http://localhost:8080/users/1
 
 ###
 DELETE  http://localhost:8080/users/3
+
+###
+
+PUT  http://localhost:8080/users/2
+Content-Type: application/json
+
+{
+    "name": "Felipe updated",
+    "isActive": true
+}

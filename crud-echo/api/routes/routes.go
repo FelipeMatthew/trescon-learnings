@@ -13,6 +13,6 @@ func RegisterRoutes(e *echo.Echo) {
 	users.GET("/:userId", handlers.GetUserById)       
 	users.POST("/", handlers.CreateUser) 
 	users.DELETE("/:userId", handlers.DeleteUserById) 
-	// users.PUT("/:userId", completeUpdateByUserId)
-	// users.PATCH("/:userId", partialUpdateByUserId)
+	users.PUT("/:userId", handlers.UpdateByUserId)
+	users.PATCH("/:userId", handlers.UpdateByUserId)
 }
