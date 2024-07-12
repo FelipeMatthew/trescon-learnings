@@ -1,0 +1,12 @@
+GET http://localhost:8080/users/
+
+###
+
+POST http://localhost:8080/users/
+Content-Type: application/json
+
+{
+    "id": "9",
+    "name": "Felipe Connor",
+    "isActive": true
+}
