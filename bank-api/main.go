@@ -1,7 +1,8 @@
 package main
 
-import "fmt"
-
 func main() {
-	fmt.Print("Hello from makefile")
+
+	server := NewAPIServer(":3000")
+	server.Run()
+
 }
