@@ -1,18 +1,16 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/felipematthew/go-learnings/library-api/api/config"
+	"github.com/felipematthew/go-learnings/library-api/api/controller"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	e := echo.New()
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Init with my own echo")
-	})
+	e.GET("/", controller.GetLibrary)
+	e.POST("/", controller.CreateLibrary)
 
 	config.DatabaseInit()
 	gorm := config.DB()
