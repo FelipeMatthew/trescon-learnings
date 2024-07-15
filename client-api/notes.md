@@ -2,3 +2,4 @@
 DOCKERFILE
 JWT auth
 Middlewares
+SWAGGER
