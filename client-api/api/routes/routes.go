@@ -18,8 +18,8 @@ func Generate(e *echo.Echo) {
 	client := e.Group("/client")
 
 	client.GET("/", handlers.GetAllClients)
+	client.GET("/:id", handlers.GetByIdClient)
 	client.POST("/", handlers.GetAdmin)
-	client.GET("/:id", handlers.GetAdmin)
 	client.DELETE("/:id", handlers.GetAdmin)
 	client.PUT("/:id", handlers.GetAdmin)
 	client.PATCH("/", handlers.GetAdmin)
