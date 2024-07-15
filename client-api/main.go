@@ -4,15 +4,14 @@ import (
 	"log"
 
 	"github.com/felipematthew/go-learnings/client-api/api/config"
+	"github.com/felipematthew/go-learnings/client-api/api/routes"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	e := echo.New()
 
-	e.GET("/", func(c echo.Context) error  {
-		return c.String(200, "hiii")
-	})
+	routes.Generate(e)
 
 	config.DatabaseInit()
 	gorm := config.DB()
