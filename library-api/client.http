@@ -1,8 +1,34 @@
-POST http://localhost:8080/
+###
+
+GET http://localhost:8080/library/
+
+
+###
+
+GET http://localhost:8080/library/1
+
+
+###
+POST http://localhost:8080/library/
 Content-Type: application/json
 
 {
-  "name": "new test",
+  "name": "Monsters",
   "author": "testing author",
   "genre" : "horror"
 }
+
+###
+
+PUT http://localhost:8080/library/2
+Content-Type: application/json
+
+{
+  "name": "new updated",
+  "author": "testing author",
+  "genre" : "horror"
+}
+
+###
+
+DELETE  http://localhost:8080/library/2

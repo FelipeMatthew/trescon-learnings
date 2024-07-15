@@ -2,15 +2,14 @@ package main
 
 import (
 	"github.com/felipematthew/go-learnings/library-api/api/config"
-	"github.com/felipematthew/go-learnings/library-api/api/controller"
+	"github.com/felipematthew/go-learnings/library-api/api/routes"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	e := echo.New()
 
-	e.GET("/", controller.GetLibrary)
-	e.POST("/", controller.CreateLibrary)
+	routes.Generate(e)
 
 	config.DatabaseInit()
 	gorm := config.DB()
