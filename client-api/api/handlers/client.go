@@ -93,7 +93,7 @@ func DeleteClient(c echo.Context) error {
 	db := config.DB()
 	id := c.Param("id")
 	client := new(models.Clients)
-	
+
 	if err := db.Delete(&client, id).Error; err != nil {
 		data := map[string]interface{}{
 			"message": err.Error(),
@@ -109,5 +109,50 @@ func DeleteClient(c echo.Context) error {
 }
 
 func CompleteEditClient(c echo.Context) error {
-	return c.JSON(200, "")
+	id := c.Param("id")
+	db := config.DB()
+	client := new(models.Clients)
+
+	// Body req
+	if err := c.Bind(&client); err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	// Get in db by id
+	newClient := new(models.Clients)
+	if err := db.Find(&newClient, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	// Updates then
+	newClient.FirstName = client.FirstName
+	newClient.LastName = client.LastName
+	newClient.Email = client.Email
+	newClient.Age = client.Age
+	newClient.Phone = client.Phone
+
+	// Save in db
+	if err := db.Model(&models.Clients{}).Where("id = ?", id).Updates(newClient).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	response := map[string]interface{}{
+		"messaage": "user edited successfuly",
+		"data":     newClient,
+	}
+
+	return c.JSON(http.StatusOK, response)
+}
+
+func PartialEditClient(c echo.Context) error {
+	
 }
