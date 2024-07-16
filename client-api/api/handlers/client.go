@@ -154,5 +154,7 @@ func CompleteEditClient(c echo.Context) error {
 }
 
 func PartialEditClient(c echo.Context) error {
-	
+	id := c.Param("id")
+	db := config.DB()
+	client := new(models.Clients)
 }
