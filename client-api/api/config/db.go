@@ -20,7 +20,6 @@ var (
 )
 
 func DatabaseInit() {
-
 	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbName, port)
 
 	database, e = gorm.Open(postgres.Open(dns), &gorm.Config{})

@@ -14,14 +14,6 @@ func main() {
 	routes.Generate(e)
 
 	config.DatabaseInit()
-	gorm := config.DB()
-
-	dbGorm, err := gorm.DB()
-	if err != nil {
-		panic(err)
-	}
-
-	dbGorm.Ping()
 
 	log.Fatal(e.Start(":8080"))
 }
