@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/felipematthew/go-learnings/client-api/api/auth"
 	"github.com/felipematthew/go-learnings/client-api/api/config"
 	"github.com/felipematthew/go-learnings/client-api/api/models"
 	"github.com/labstack/echo/v4"
@@ -28,7 +29,32 @@ func GetAdmin(c echo.Context) error {
 }
 
 func CreateAdmin(c echo.Context) error {
-	return c.String(http.StatusOK, "getting admin account")
+	db := config.DB()
+	admin := new(models.Admin)
+
+	if err := c.Bind(admin); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "invalid request",
+		})
+	}
+
+	// Hash user pass
+	hashedPassword, err := auth.HashPassword(admin.Password)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Failed to hash password",
+		})
+	}
+
+	admin.Password = hashedPassword
+
+	if err := db.Create(&admin).Error; err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Failed to create admin",
+		})
+	}
+
+	return c.JSON(http.StatusOK, admin)
 }
 
 func DeleteAdmin(c echo.Context) error {
