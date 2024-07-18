@@ -108,7 +108,7 @@ func DeleteClient(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func CompleteEditClient(c echo.Context) error {
+func CompleteUpdateClient(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()
 	client := new(models.Clients)
@@ -153,7 +153,7 @@ func CompleteEditClient(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func PartialEditClient(c echo.Context) error {
+func PartialUpdateClient(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()
 	client := new(models.Clients)
