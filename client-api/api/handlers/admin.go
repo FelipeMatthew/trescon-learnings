@@ -28,7 +28,7 @@ func GetAdmin(c echo.Context) error {
 }
 
 func CreateAdmin(c echo.Context) error {
-	
+	return c.String(http.StatusOK, "getting admin account")
 }
 
 func DeleteAdmin(c echo.Context) error {

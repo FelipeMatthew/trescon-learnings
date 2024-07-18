@@ -13,7 +13,9 @@ func Generate(e *echo.Echo) {
 	admin.GET("/", handlers.GetAdmin)
 	admin.POST("/", handlers.CreateAdmin)
 	admin.DELETE("/:id", handlers.DeleteAdmin)
-
+	
+	admin.POST("/login", handlers.Login)
+	
 	// Clients routes
 	client := e.Group("/client")
 

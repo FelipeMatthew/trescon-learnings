@@ -3,6 +3,7 @@ module github.com/felipematthew/go-learnings/client-api
 go 1.22.4
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/labstack/echo/v4 v4.12.0
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.11
