@@ -19,7 +19,7 @@ func GenerateJwt(name string, admin bool) (string, error) {
 	}
 
 	// Criando o token JWT usando a mesma chave secreta
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
 
 	// Assinando o token usando JwtSecret
 	return token.SignedString(JwtSecret)
