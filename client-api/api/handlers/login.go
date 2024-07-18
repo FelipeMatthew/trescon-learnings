@@ -11,7 +11,7 @@ import (
 
 func Login(c echo.Context) error {
 	db := config.DB()
-	
+
 	adminBind := new(models.Admin)
 
 	if err := c.Bind(&adminBind); err != nil {
@@ -28,6 +28,12 @@ func Login(c echo.Context) error {
 		})
 	}
 
+	checkPass := auth.CheckPassword(adminBind.Password, admin.Password)
+	if !checkPass {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Invalid password",
+		})
+	}
 
 	// Generate token
 	token, err := auth.GenerateJwt(admin.Username, true)

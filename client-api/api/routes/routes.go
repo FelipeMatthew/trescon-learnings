@@ -2,20 +2,23 @@ package routes
 
 import (
 	"github.com/felipematthew/go-learnings/client-api/api/handlers"
+	"github.com/felipematthew/go-learnings/client-api/api/middlewares"
 	"github.com/labstack/echo/v4"
 )
 
 func Generate(e *echo.Echo) {
 
+	e.POST("/login", handlers.Login)
+
 	// Admin routes
 	admin := e.Group("/admin")
+
+	admin.Use(middlewares.JwtWithConfig)
 
 	admin.GET("/", handlers.GetAdmin)
 	admin.POST("/", handlers.CreateAdmin)
 	admin.DELETE("/:id", handlers.DeleteAdmin)
-	
-	admin.POST("/login", handlers.Login)
-	
+
 	// Clients routes
 	client := e.Group("/client")
 
