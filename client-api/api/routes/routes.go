@@ -22,7 +22,7 @@ func Generate(e *echo.Echo) {
 	client.POST("/", handlers.CreateClient)
 	client.DELETE("/:id", handlers.DeleteClient)
 	client.PUT("/:id", handlers.CompleteEditClient)
-	client.PATCH("/:id", handlers.GetAdmin)
+	client.PATCH("/:id", handlers.PartialEditClient)
 
 	// TODO: Middleware & JWT Claims
 

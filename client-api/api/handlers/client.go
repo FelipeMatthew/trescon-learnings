@@ -157,4 +157,51 @@ func PartialEditClient(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()
 	client := new(models.Clients)
+
+	// Get body
+	if err := c.Bind(&client); err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	newClient := new(models.Clients)
+	// Find user
+	if err := db.Find(&newClient, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	// Validations
+	if newClient.FirstName != "" {
+		newClient.FirstName = client.FirstName
+	}
+	if client.LastName != "" {
+		newClient.LastName = client.LastName
+	}
+	if newClient.Email != "" {
+		newClient.Email = client.Email
+	}
+	if newClient.Age != 0 {
+		newClient.Age = client.Age
+	}
+	if newClient.Phone != "" {
+		newClient.Phone = client.Phone
+	}
+
+	if err := db.Model(&models.Clients{}).Where("id = ?", id).Updates(newClient).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	response := map[string]interface{}{
+		"data": newClient,
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
