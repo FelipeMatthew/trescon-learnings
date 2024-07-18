@@ -21,16 +21,43 @@ func GetAdmin(c echo.Context) error {
 	}
 
 	response := map[string]interface{}{
-		"data": admins, 
+		"data": admins,
 	}
 
 	return c.JSON(http.StatusOK, response)
 }
 
 func CreateAdmin(c echo.Context) error {
-	return c.String(http.StatusOK, "getting admin account")
+	
 }
 
 func DeleteAdmin(c echo.Context) error {
-	return c.String(http.StatusOK, "getting admin account")
+	id := c.Param("id")
+	db := config.DB()
+
+	admin := new(models.Admin)
+
+	if err := db.Find(&admin, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	if admin.Id == 0 {
+		return c.JSON(http.StatusInternalServerError, "id not founded")
+	}
+
+	if err := db.Delete(&admin, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	response := map[string]string{
+		"data": "admin deleted successfuly",
+	}
+
+	return c.JSON(http.StatusOK, response)
 }
