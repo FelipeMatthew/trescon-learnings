@@ -15,9 +15,7 @@ CREATE TABLE clients (
 
 INSERT INTO admin (username, password)
 VALUES
-    ('john_doe', 'password123'),
-    ('jane_smith', 'securepass'),
-    ('mike_jones', 'letmein');
+    ('admin', '123');
 
 INSERT INTO clients (first_name, last_name, email, age, phone)
 VALUES

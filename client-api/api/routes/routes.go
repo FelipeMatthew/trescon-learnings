@@ -8,6 +8,7 @@ import (
 
 func Generate(e *echo.Echo) {
 
+	// Public route
 	e.POST("/login", handlers.Login)
 
 	// Admin routes
@@ -22,13 +23,12 @@ func Generate(e *echo.Echo) {
 	// Clients routes
 	client := e.Group("/client")
 
+	admin.Use(middlewares.JwtWithConfig)
+
 	client.GET("/", handlers.GetAllClients)
 	client.GET("/:id", handlers.GetByIdClient)
 	client.POST("/", handlers.CreateClient)
 	client.DELETE("/:id", handlers.DeleteClient)
 	client.PUT("/:id", handlers.CompleteUpdateClient)
 	client.PATCH("/:id", handlers.PartialUpdateClient)
-
-	// TODO: Middleware & JWT Claims
-
 }

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/felipematthew/go-learnings/client-api/api/models"
@@ -22,5 +23,14 @@ func GenerateJwt(name string, admin bool) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, claims)
 
 	// Assinando o token usando JwtSecret
-	return token.SignedString(JwtSecret)
+	signedToken, err := token.SignedString(JwtSecret)
+	if err != nil {
+		return "", err
+	}
+
+	// Log para verificar o token gerado
+	fmt.Println("Generated Token:", signedToken)
+
+	return signedToken, nil
 }
+
