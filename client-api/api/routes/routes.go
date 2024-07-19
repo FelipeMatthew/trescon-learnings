@@ -8,22 +8,21 @@ import (
 
 func Generate(e *echo.Echo) {
 
-	// Public route
+	// Public
 	e.POST("/login", handlers.Login)
 
-	// Admin routes
-	admin := e.Group("/admin")
+	protected := e.Group("/api/v1")
+	protected.Use(middlewares.JwtWithConfig)
 
-	admin.Use(middlewares.JwtWithConfig)
+	// Admin routes
+	admin := protected.Group("/admin")
 
 	admin.GET("/", handlers.GetAdmin)
 	admin.POST("/", handlers.CreateAdmin)
 	admin.DELETE("/:id", handlers.DeleteAdmin)
 
 	// Clients routes
-	client := e.Group("/client")
-
-	admin.Use(middlewares.JwtWithConfig)
+	client := protected.Group("/client")
 
 	client.GET("/", handlers.GetAllClients)
 	client.GET("/:id", handlers.GetByIdClient)

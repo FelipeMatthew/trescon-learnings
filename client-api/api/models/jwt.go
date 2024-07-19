@@ -7,3 +7,4 @@ type JwtCustomClaims struct {
 	Admin bool   `json:"admin"`
 	jwt.RegisteredClaims
 }
+

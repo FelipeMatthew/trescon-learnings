@@ -20,4 +20,3 @@ func JwtWithConfig(next echo.HandlerFunc) echo.HandlerFunc {
 		return middleware.JWTWithConfig(config)(next)(c)
 	}
 }
-
