@@ -8,6 +8,15 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// GetAllClients godoc
+// @Summary Get all clients
+// @Description Get all clients
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Clients
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients [get]
 func GetAllClients(c echo.Context) error {
 	db := config.DB()
 	clients := []*models.Clients{}
@@ -27,6 +36,16 @@ func GetAllClients(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+// GetByIdClient godoc
+// @Summary Get a client by ID
+// @Description Get a client by ID
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Client ID"
+// @Success 200 {object} models.Clients
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients/{id} [get]
 func GetByIdClient(c echo.Context) error {
 	db := config.DB()
 	id := c.Param("id")
@@ -54,6 +73,16 @@ func GetByIdClient(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+// CreateClient godoc
+// @Summary Create a new client
+// @Description Create a new client
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Param client body models.Clients true "Client data"
+// @Success 201 {object} models.Clients
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients [post]
 func CreateClient(c echo.Context) error {
 	db := config.DB()
 	client := &models.Clients{}
@@ -89,6 +118,16 @@ func CreateClient(c echo.Context) error {
 	return c.JSON(http.StatusCreated, response)
 }
 
+// DeleteClient godoc
+// @Summary Delete a client by ID
+// @Description Delete a client by ID
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Client ID"
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients/{id} [delete]
 func DeleteClient(c echo.Context) error {
 	db := config.DB()
 	id := c.Param("id")
@@ -108,6 +147,17 @@ func DeleteClient(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
+// CompleteUpdateClient godoc
+// @Summary Update a client completely
+// @Description Update a client completely
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Client ID"
+// @Param client body models.Clients true "Client data"
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients/{id} [put]
 func CompleteUpdateClient(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()
@@ -146,13 +196,24 @@ func CompleteUpdateClient(c echo.Context) error {
 	}
 
 	response := map[string]interface{}{
-		"messaage": "user edited successfuly",
-		"data":     newClient,
+		"message": "user edited successfully",
+		"data":    newClient,
 	}
 
 	return c.JSON(http.StatusOK, response)
 }
 
+// PartialUpdateClient godoc
+// @Summary Update a client partially
+// @Description Update a client partially
+// @Tags clients
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Client ID"
+// @Param client body models.Clients true "Client data"
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /clients/{id} [patch]
 func PartialUpdateClient(c echo.Context) error {
 	id := c.Param("id")
 	db := config.DB()

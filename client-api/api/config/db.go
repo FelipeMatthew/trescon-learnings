@@ -12,7 +12,7 @@ var (
 	host     = "localhost"
 	user     = "root"
 	password = "password"
-	dbName   = "client_api"
+	dbName   = "clients_api"
 	port     = "5432"
 
 	database *gorm.DB

@@ -4,11 +4,13 @@ import (
 	"github.com/felipematthew/go-learnings/client-api/api/handlers"
 	"github.com/felipematthew/go-learnings/client-api/api/middlewares"
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func Generate(e *echo.Echo) {
 
 	// Public
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.POST("/login", handlers.Login)
 
 	protected := e.Group("/api/v1")

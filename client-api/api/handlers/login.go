@@ -9,6 +9,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// Login godoc
+// @Summary Login an admin
+// @Description Login an admin and return a JWT token
+// @Tags login
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /login [post]
 func Login(c echo.Context) error {
 	db := config.DB()
 
@@ -46,5 +56,4 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"token": token,
 	})
-
 }

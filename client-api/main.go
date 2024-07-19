@@ -5,7 +5,7 @@ import (
 
 	"github.com/felipematthew/go-learnings/client-api/api/config"
 	"github.com/felipematthew/go-learnings/client-api/api/routes"
-	"github.com/joho/godotenv"
+	_ "github.com/felipematthew/go-learnings/client-api/docs"
 	"github.com/labstack/echo/v4"
 )
 
@@ -35,12 +35,6 @@ import (
 // @BearerFormat JWT
 func main() {
 	e := echo.New()
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
-	}
-
 	routes.Generate(e)
 
 	config.DatabaseInit()
