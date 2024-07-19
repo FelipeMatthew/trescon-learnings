@@ -12,6 +12,7 @@ func Generate(e *echo.Echo) {
 	// Public
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	e.POST("/login", handlers.Login)
+	e.POST("/createadmin", handlers.CreateAdmin)
 
 	protected := e.Group("/api/v1")
 	protected.Use(middlewares.JwtWithConfig)
@@ -20,7 +21,6 @@ func Generate(e *echo.Echo) {
 	admin := protected.Group("/admin")
 
 	admin.GET("/", handlers.GetAdmin)
-	admin.POST("/", handlers.CreateAdmin)
 	admin.DELETE("/:id", handlers.DeleteAdmin)
 
 	// Clients routes

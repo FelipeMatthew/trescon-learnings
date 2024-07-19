@@ -13,9 +13,6 @@ CREATE TABLE clients (
     phone VARCHAR(20)
 );
 
-INSERT INTO admin (username, password)
-VALUES
-    ('admin', '123');
 
 INSERT INTO clients (first_name, last_name, email, age, phone)
 VALUES
