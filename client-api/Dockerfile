@@ -1,24 +1,20 @@
-# Build stage
-FROM golang:1.22-alpine AS builder
+# build environment
+FROM golang:1.22-alpine AS build
+
+WORKDIR /go/src/ms
+
+ADD . /go/src/ms
+
+RUN go mod tidy
+RUN go build -o client_api
+
+# production environment
+FROM gcr.io/distroless/base-debian12
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY --from=build /go/src/ms/client_api .
 
-RUN go mod download
+EXPOSE 8080
 
-COPY . .
-
-RUN go build -o main .
-
-# Final image
-FROM alpine:latest
-
-RUN apk --no-cache add ca-certificates
-
-WORKDIR /root/
-
-COPY --from=builder /app/main .
-COPY .env .
-
-CMD ["./main"]
+ENTRYPOINT ["./client_api"]
