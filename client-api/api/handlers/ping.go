@@ -8,7 +8,14 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// TODO: Swagger config
+// Ping godoc
+// @Summary Ping server
+// @Description Get server and database config
+// @Tags ping
+// @Produce  json
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /ping [get]
 func Ping(c echo.Context) error {
 	db := config.DB()
 	var db_connection = false
