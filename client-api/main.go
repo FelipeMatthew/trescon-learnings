@@ -6,8 +6,9 @@ import (
 	"github.com/felipematthew/go-learnings/client-api/api/config"
 	"github.com/felipematthew/go-learnings/client-api/api/routes"
 	_ "github.com/felipematthew/go-learnings/client-api/docs"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	 "github.com/joho/godotenv"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 // @title Client API
@@ -35,15 +36,27 @@ import (
 // @Scheme bearer
 // @BearerFormat JWT
 func main() {
-	e := echo.New()
-
-	routes.Generate(e)
-
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error to load .env files")
 	}
 
+	e := echo.New()
+
+	routes.Generate(e)
+
 	config.DatabaseInit()
+
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: `[${time_rfc3339}]  ${status}  ${method}  ${host}${path} ${latency_human}` + "\n",
+	}))
+
+	e.Use(middleware.Recover())
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"}, // Permite todas as origens
+		AllowMethods: []string{echo.GET, echo.POST, echo.PUT, echo.DELETE, echo.OPTIONS},
+		AllowHeaders: []string{echo.HeaderContentType, echo.HeaderAuthorization},
+	}))
 
 	log.Fatal(e.Start(":8080"))
 }
