@@ -11,6 +11,7 @@ func Generate(e *echo.Echo) {
 
 	// Public
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
+	e.GET("/ping", handlers.Ping)
 	e.POST("/login", handlers.Login)
 	e.POST("/createadmin", handlers.CreateAdmin)
 

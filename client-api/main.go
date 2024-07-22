@@ -7,6 +7,7 @@ import (
 	"github.com/felipematthew/go-learnings/client-api/api/routes"
 	_ "github.com/felipematthew/go-learnings/client-api/docs"
 	"github.com/labstack/echo/v4"
+	 "github.com/joho/godotenv"
 )
 
 // @title Client API
@@ -35,7 +36,12 @@ import (
 // @BearerFormat JWT
 func main() {
 	e := echo.New()
+
 	routes.Generate(e)
+
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error to load .env files")
+	}
 
 	config.DatabaseInit()
 

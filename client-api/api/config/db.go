@@ -3,23 +3,24 @@ package config
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var (
-	host     = "localhost"
-	user     = "root"
-	password = "password"
-	dbName   = "clients_api"
-	port     = "5432"
-
 	database *gorm.DB
 	e        error
 )
 
 func DatabaseInit() {
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
+
 	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbName, port)
 
 	database, e = gorm.Open(postgres.Open(dns), &gorm.Config{})
