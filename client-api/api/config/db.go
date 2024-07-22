@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -27,8 +26,6 @@ func DatabaseInit() {
 	if e != nil {
 		panic(e)
 	}
-
-	log.Println(dns)
 }
 
 func DB() *gorm.DB {
