@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/felipematthew/go-learnings/client-api/api/models"
 	"github.com/labstack/echo/v4"
@@ -11,12 +11,11 @@ import (
 var config = middleware.JWTConfig{
 	Claims:        &models.JwtCustomClaims{},
 	SigningMethod: "HS512",
-	SigningKey:    []byte("your_secret_key"),
+	SigningKey:    []byte(os.Getenv("SECRET_KEY")),
 }
 
 func JwtWithConfig(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		fmt.Println("Middleware JWT Called")
 		return middleware.JWTWithConfig(config)(next)(c)
 	}
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// TODO: Swagger config
 func Ping(c echo.Context) error {
 	db := config.DB()
 	var db_connection = false

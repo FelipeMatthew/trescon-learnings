@@ -1,14 +1,14 @@
 package auth
 
 import (
-	"fmt"
+	"os"
 	"time"
 
 	"github.com/felipematthew/go-learnings/client-api/api/models"
 	"github.com/golang-jwt/jwt/v4"
 )
 
-var JwtSecret = []byte("your_secret_key")
+var JwtSecret = []byte(os.Getenv("SECRET_KEY"))
 
 func GenerateJwt(name string, admin bool) (string, error) {
 	claims := &models.JwtCustomClaims{
@@ -29,8 +29,5 @@ func GenerateJwt(name string, admin bool) (string, error) {
 	}
 
 	// Log para verificar o token gerado
-	fmt.Println("Generated Token:", signedToken)
-
 	return signedToken, nil
 }
-
