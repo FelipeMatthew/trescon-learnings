@@ -5,21 +5,22 @@ import (
 	"fmt"
 )
 
-type Person struct {
-	Firstname  string
-	Lastname   string
-	Age        uint
-	Profession string
-	Salary     float32
+// Unexported
+type person struct {
+	firstname  string
+	lastname   string
+	age        uint
+	profession string
+	salary     float32
 }
 
-func main() {
-	person1 := Person{
-		Firstname:  "Felipe",
-		Lastname:   "Matthew",
-		Age:        20,
-		Profession: "developer",
-		Salary:     1500.50,
+func persona() {
+	person1 := person{
+		firstname:  "Felipe",
+		lastname:   "Matthew",
+		age:        20,
+		profession: "developer",
+		salary:     1500.50,
 	}
 
 	// Transformar em json
