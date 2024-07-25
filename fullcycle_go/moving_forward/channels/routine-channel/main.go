@@ -26,4 +26,6 @@ func main() {
 	// Channel so pode receber um outro valor quando esse channerl for esvaziado
 	// duas funçoes trabalhando em paralelo
 	// A de cima atribui valor, a de baixo solta o valor
+
+	// Canal de comunicação entre rotinas
 }
