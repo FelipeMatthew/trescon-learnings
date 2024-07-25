@@ -4,7 +4,7 @@ import "fmt"
 
 // Interface vai forçar que todos tenham mesma assinatura
 type Animal interface {
-	start() string
+	sound() string
 }
 
 type dog struct {
@@ -16,9 +16,14 @@ type cat struct {
 }
 
 // Method do objeto
+// Vai definir que o objeto faz parte por conta do método
+// não existe em go - implements - ela ja é atribuida automaticamente
+func (d dog) sound() string {
+	return "this sound came from: " + d.name
+}
 
-func sound(a Animal) string {
-	return a.start()
+func animalSound(a Animal) string {
+	return a.sound()
 }
 
 func main() {
