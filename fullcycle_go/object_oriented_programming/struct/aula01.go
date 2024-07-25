@@ -14,7 +14,7 @@ func (c Car) info() string {
 	return fmt.Sprintf("name: %s\nyear: %d\ncolor: %s\n", c.Name, c.Year, c.Color)
 }
 
-func main() {
+func car01() {
 	car1 := Car{
 		Name:  "carinho",
 		Year:  20,
