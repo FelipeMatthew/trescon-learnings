@@ -14,7 +14,7 @@ type Person struct {
 	Salary     float32
 }
 
-func main() {
+func testing() {
 	person1 := Person{
 		Firstname:  "Felipe",
 		Lastname:   "Matthew",
