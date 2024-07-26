@@ -29,3 +29,6 @@ que vai servir para evitar redundância no código
 
 1 - Fazer o modelo conceitual
 2- Definir os tipos de dados
+
+- começar com tabelas que não possui dependências nem chave estrangeira.
+- CONSTRAINT - Restrição - EX deixar apenas valores positivos 
