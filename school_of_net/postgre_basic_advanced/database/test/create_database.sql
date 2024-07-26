@@ -10,3 +10,5 @@ CREATE DATABASE schoolofnet
 
 COMMENT ON DATABASE schoolofnet
     IS 'just to studing database';
+
+
