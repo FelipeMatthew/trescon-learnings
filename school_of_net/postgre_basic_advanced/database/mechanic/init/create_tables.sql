@@ -44,7 +44,7 @@ ALTER TABLE IF EXISTS public.tipo_conserto
 CREATE TABLE public.peca
 (
     id_peca serial NOT NULL,
-    nomde_peca character varying(100) NOT NULL,
+    nome_peca character varying(100) NOT NULL,
     modelo_numero character varying NOT NULL,
     preco_peca numeric(10, 2) NOT NULL,
     PRIMARY KEY (id_peca)
@@ -52,3 +52,7 @@ CREATE TABLE public.peca
 
 ALTER TABLE IF EXISTS public.peca
     OWNER to postgres;
+
+ALTER TABLE IF EXISTS public.peca
+    ADD CONSTRAINT preco_positivo CHECK (preco_peca>=0)
+    NOT VALID;
