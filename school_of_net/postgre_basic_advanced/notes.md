@@ -20,3 +20,12 @@ real
 chave primária geralmente utilizar o serial
 
 character varianty - varchar
+
+Projeto normalizatioin
+que vai servir para evitar redundância no código
+
+
+## Passos para construir um banco de dados
+
+1 - Fazer o modelo conceitual
+2- Definir os tipos de dados
