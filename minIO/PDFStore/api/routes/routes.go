@@ -17,4 +17,5 @@ func SetupRoutes(e *echo.Echo) {
 	buckets := e.Group("/buckets")
 
 	buckets.GET("/", handlers.GetBuckets)
+	buckets.POST("/:bucketName", handlers.CreateBucket)
 }
