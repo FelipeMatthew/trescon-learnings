@@ -8,9 +8,13 @@ import (
 
 func SetupRoutes(e *echo.Echo) {
 
-	minio := e.Group("/minio")
+	files := e.Group("/files")
 
-	minio.GET("/", handlers.GetFiles)
-	minio.POST("/", handlers.InsertFiles)
-	minio.DELETE("/:filename", handlers.DeleteFiles)
+	files.GET("/", handlers.GetFiles)
+	files.POST("/", handlers.InsertFiles)
+	files.DELETE("/:filename", handlers.DeleteFiles)
+
+	buckets := e.Group("/buckets")
+
+	buckets.GET("/", handlers.GetBuckets)
 }
