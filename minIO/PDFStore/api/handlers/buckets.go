@@ -44,3 +44,16 @@ func CreateBucket(c echo.Context) error {
 		"info":    newBucket,
 	})
 }
+
+func DeleteBucket(c echo.Context) error {
+	bucketName := c.Param("bucketName")
+
+	err := config.MinioClient.RemoveBucket(context.Background(), bucketName)
+	if err != nil {
+		return c.JSON(http.StatusOK, echo.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, echo.Map{"messege": "bucket deleted successfuly"})
+}

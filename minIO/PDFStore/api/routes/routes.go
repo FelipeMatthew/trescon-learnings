@@ -18,4 +18,5 @@ func SetupRoutes(e *echo.Echo) {
 
 	buckets.GET("/", handlers.GetBuckets)
 	buckets.POST("/:bucketName", handlers.CreateBucket)
+	buckets.DELETE("/:bucketName", handlers.DeleteBucket)
 }
