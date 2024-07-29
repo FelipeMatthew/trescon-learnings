@@ -1,0 +1,1 @@
+Projeto criado para integração do MinIO junto com o GO Lang
