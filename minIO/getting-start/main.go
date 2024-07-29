@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"path/filepath"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -45,16 +46,23 @@ func main() {
 	}
 
 	// creating a file to insert on bucket
-	objectName := "hello.txt"
-	filePath := "C:\\Users\\felipe.nascimento\\Desktop\\Codes\\trescon-learnings\\minIO\\getting-start\\testfiles\\hello.txt"
-	contentType := "application/text"
-
-	// Inserting file
-	info, err := minioClient.FPutObject(context.Background(), bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
-	if err != nil {
-		log.Fatalln(err)
+	files := []string{
+		"C:\\Users\\felipe.nascimento\\Desktop\\Codes\\trescon-learnings\\minIO\\getting-start\\testfiles\\hello.txt",
+		"C:\\Users\\felipe.nascimento\\Desktop\\Codes\\trescon-learnings\\minIO\\getting-start\\testfiles\\file1.txt",
+		"C:\\Users\\felipe.nascimento\\Desktop\\Codes\\trescon-learnings\\minIO\\getting-start\\testfiles\\file2.txt",
 	}
 
-	fmt.Println("File added successfully: \nFile: %s of size: &d", objectName, info.Size)
+	for _, myFilePath := range files {
+		// Extract the file path name
+		objectName := filepath.Base(myFilePath)
+		contentType := "application/text"
 
+		// Inserting file
+		info, err := minioClient.FPutObject(context.Background(), bucketName, objectName, myFilePath, minio.PutObjectOptions{ContentType: contentType})
+		if err != nil {
+			log.Printf("Failed to upload %s: %v\n", myFilePath, err)
+			continue
+		}
+		fmt.Printf("File %s added successfully with size %d bytes\n", objectName, info.Size)
+	}
 }
