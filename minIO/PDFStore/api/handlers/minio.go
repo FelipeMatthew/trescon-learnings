@@ -10,8 +10,12 @@ import (
 	"github.com/minio/minio-go/v7"
 )
 
+// TODO: Fazer pastas e dividir os arquivos entre elas
+
+var bucketName string = "mynewbucket"
+
 func GetFiles(c echo.Context) error {
-	objects := config.MinioClient.ListObjects(context.Background(), "mynewbucket", minio.ListObjectsOptions{Recursive: true})
+	objects := config.MinioClient.ListObjects(context.Background(), bucketName, minio.ListObjectsOptions{Recursive: true})
 	fileNames := []string{}
 
 	for object := range objects {
@@ -46,7 +50,6 @@ func InsertFiles(c echo.Context) error {
 	defer src.Close()
 
 	// Create an object in MinIO
-	bucketName := "mynewbucket"
 	objectName := file.Filename
 	contentType := file.Header.Get("Content-Type")
 
@@ -64,4 +67,19 @@ func InsertFiles(c echo.Context) error {
 		"message": "file uploaded successfuly",
 		"info":    info,
 	})
+}
+
+func DeleteFiles(c echo.Context) error {
+	objectName := c.Param("filename")
+
+	// TODO: Validation with not founded file
+
+	err := config.MinioClient.RemoveObject(context.Background(), bucketName, objectName, minio.RemoveObjectOptions{})
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	message := "file: " + objectName + " deleted successfuly"
+
+	return c.JSON(http.StatusOK, echo.Map{"message": message})
 }

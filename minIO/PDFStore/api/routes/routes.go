@@ -12,4 +12,5 @@ func SetupRoutes(e *echo.Echo) {
 
 	minio.GET("/", handlers.GetFiles)
 	minio.POST("/", handlers.InsertFiles)
+	minio.DELETE("/:filename", handlers.DeleteFiles)
 }
