@@ -2,7 +2,11 @@ package handlers
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"pdfstore/api/config"
 	"pdfstore/api/utils"
@@ -10,8 +14,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/minio/minio-go/v7"
 )
-
-// TODO: Fazer pastas e dividir os arquivos entre elas
 
 func GetFiles(c echo.Context) error {
 	bucketName := c.Param("bucketName")
@@ -40,7 +42,56 @@ func GetFiles(c echo.Context) error {
 
 // TODO: Install files
 func DownloadFiles(c echo.Context) error {
-	return c.JSON(http.StatusOK, "")
+	bucketName := c.Param("bucketName")
+	localDir := "./files/" + bucketName
+
+	// Create dir if dont exist
+	// Full folder access
+	if err := os.Mkdir(localDir, os.ModePerm); err != nil {
+		return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Failed to create local directory: %v", err))
+	}
+
+	// Get all objects
+	objects := config.MinioClient.ListObjects(context.Background(), bucketName, minio.ListObjectsOptions{Recursive: true})
+
+	// Get one by one
+	for object := range objects {
+		// Validating
+		if object.Err != nil {
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Error listing object: %v", object.Err))
+		}
+
+		// Getting the object name
+		objectName := object.Key
+		// ./files/objectname
+		localFilePath := filepath.Join(localDir, objectName) // Vai unir os caracteres com base no OS
+
+		// Criar diretórios locais necessários para o arquivo
+		if err := os.MkdirAll(filepath.Dir(localFilePath), os.ModePerm); err != nil {
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Failed to create local directories: %v", err))
+		}
+
+		// Abrir novo arquivo local para salva o conteudo
+		localFile, err := os.Create(localFilePath)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Failed to create local file path: %v", err))
+		}
+		// Vai fechar no final do loop
+		defer localFile.Close()
+
+		// * Apenas pegar o objeto do MinIO
+		objectReader, err := config.MinioClient.GetObject(context.Background(), bucketName, objectName, minio.GetObjectOptions{})
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Failed to get object from MinIO: %v", err))
+		}
+		defer objectReader.Close()
+
+		// * copiar o objeto do MinIO para maquina local
+		if _, err := io.Copy(localFile, objectReader); err != nil {
+			return c.JSON(http.StatusInternalServerError, fmt.Sprintf("Failed to copy object to local file: %v", err))
+		}
+	}
+	return c.JSON(http.StatusOK, fmt.Sprintf("All files downloaded successfully to %s", localDir))
 }
 
 func InsertFiles(c echo.Context) error {
