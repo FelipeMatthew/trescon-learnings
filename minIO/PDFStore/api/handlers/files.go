@@ -38,36 +38,67 @@ func DownloadFiles(c echo.Context) error {
 func InsertFiles(c echo.Context) error {
 	// READ FROM BODY - form-data file
 	bucketName := c.Param("bucketName")
-	folderPath := c.Param("folder")
+	folderPath := c.Param("*") // Geting all or nothing
 	file, err := c.FormFile("file")
 
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"error": err.Error(),
+		})
 	}
 
-	// Open the files
+	// Open the file
 	src, err := file.Open()
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"error": err.Error(),
+		})
 	}
 	defer src.Close()
 
-	// Create an object in MinIO
-	objectName := folderPath + "/" + file.Filename
-	contentType := file.Header.Get("Content-Type")
+	// Validating folder path
+	var objectName string
 
+	switch folderPath {
+	case "":
+		objectName = file.Filename
+	case "documentations":
+		objectName = "documentations/" + file.Filename
+	case "certifications":
+		objectName = "certifications/" + file.Filename
+	default:
+		return c.JSON(http.StatusBadRequest, "Folder not found")
+	}
+
+	// Check content type
+	contentType := file.Header.Get("Content-Type")
 	if contentType != "application/pdf" {
 		return c.JSON(http.StatusBadRequest, "Invalid type of file")
+	}
+
+	// Check if the bucket exists
+	exists, err := config.MinioClient.BucketExists(context.Background(), bucketName)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"error": "Failed to check if bucket exists: " + err.Error(),
+		})
+	}
+	if !exists {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"error": "Bucket does not exist",
+		})
 	}
 
 	// Uploading the file
 	info, err := config.MinioClient.PutObject(context.Background(), bucketName, objectName, src, file.Size, minio.PutObjectOptions{ContentType: contentType})
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"error": "Failed to upload file: " + err.Error(),
+		})
 	}
 
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "file uploaded successfuly",
+		"message": "File uploaded successfully",
 		"info":    info,
 	})
 }
