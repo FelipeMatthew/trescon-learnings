@@ -10,9 +10,9 @@ func SetupRoutes(e *echo.Echo) {
 
 	files := e.Group("/files")
 
-	files.GET("/", handlers.GetFiles)
-	files.POST("/", handlers.InsertFiles)
-	files.DELETE("/:filename", handlers.DeleteFiles)
+	files.GET("/:bucketName", handlers.GetFiles)
+	files.POST("/:bucketName", handlers.InsertFiles)
+	files.DELETE("/:bucketName/:filename", handlers.DeleteFiles)
 
 	buckets := e.Group("/buckets")
 

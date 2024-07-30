@@ -12,9 +12,9 @@ import (
 
 // TODO: Fazer pastas e dividir os arquivos entre elas
 
-var bucketName string = "mynewbucket"
-
 func GetFiles(c echo.Context) error {
+	bucketName := c.Param("bucketName")
+
 	objects := config.MinioClient.ListObjects(context.Background(), bucketName, minio.ListObjectsOptions{Recursive: true})
 	fileNames := []string{}
 
@@ -37,6 +37,8 @@ func DownloadFiles(c echo.Context) error {
 
 func InsertFiles(c echo.Context) error {
 	// READ FROM BODY - form-data file
+	bucketName := c.Param("bucketName")
+
 	file, err := c.FormFile("file")
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -70,6 +72,7 @@ func InsertFiles(c echo.Context) error {
 }
 
 func DeleteFiles(c echo.Context) error {
+	bucketName := c.Param("bucketName")
 	objectName := c.Param("filename")
 
 	// TODO: Validation with not founded file
