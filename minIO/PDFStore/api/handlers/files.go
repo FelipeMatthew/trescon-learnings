@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"pdfstore/api/config"
+	"pdfstore/api/utils"
 
 	"github.com/labstack/echo/v4"
 	"github.com/minio/minio-go/v7"
@@ -14,6 +15,13 @@ import (
 
 func GetFiles(c echo.Context) error {
 	bucketName := c.Param("bucketName")
+
+	// Check if the bucket exists
+	if err := utils.CheckBucketExist(context.Background(), bucketName); err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"error": "Failed to check the bucket: " + err.Error(),
+		})
+	}
 
 	objects := config.MinioClient.ListObjects(context.Background(), bucketName, minio.ListObjectsOptions{Recursive: true})
 	fileNames := []string{}
@@ -77,15 +85,9 @@ func InsertFiles(c echo.Context) error {
 	}
 
 	// Check if the bucket exists
-	exists, err := config.MinioClient.BucketExists(context.Background(), bucketName)
-	if err != nil {
+	if err := utils.CheckBucketExist(context.Background(), bucketName); err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{
-			"error": "Failed to check if bucket exists: " + err.Error(),
-		})
-	}
-	if !exists {
-		return c.JSON(http.StatusBadRequest, echo.Map{
-			"error": "Bucket does not exist",
+			"error": "Failed to check the bucket: " + err.Error(),
 		})
 	}
 
