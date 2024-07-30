@@ -6,3 +6,4 @@
 6. Fazer adicionar em diferentes buckets - ✅
 7. Aplicar AIR TOML - ✅
 8. Configurar variáveis de ambiente - ✅
+9. Entender essa parte de comunicação e integração com banco de dados
