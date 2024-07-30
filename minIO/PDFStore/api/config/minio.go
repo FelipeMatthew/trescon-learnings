@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+	"os"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -11,13 +12,13 @@ var MinioClient *minio.Client
 
 func MinioInit() {
 	var err error
-	endpoint := "host.docker.internal:9000"
-	acessKeyID := "admin"
-	secretAccessKey := "password"
+	endpoint := os.Getenv("MINIO_URL")
+	accessKeyID := os.Getenv("MINIO_AKEY")
+	secretAccessKey := os.Getenv("MINIO_SKEY")
 	useSSL := false
 
 	MinioClient, err = minio.New(endpoint, &minio.Options{
-		Creds:  credentials.NewStaticV4(acessKeyID, secretAccessKey, ""),
+		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
 		Secure: useSSL,
 	})
 
