@@ -13,6 +13,7 @@ func SetupRoutes(e *echo.Echo) {
 	files.GET("/:bucketName", handlers.GetFiles)
 	files.GET("/:bucketName/download", handlers.DownloadFiles)
 	files.GET("/:bucketName/:filename/temp-url", handlers.GenerateTemporaryUrl)
+	files.GET("/:bucketName/:filename/metadata", handlers.GetFileMetadata)
 	files.POST("/:bucketName/*", handlers.InsertFiles)
 	files.DELETE("/:bucketName/:filename", handlers.DeleteFiles)
 

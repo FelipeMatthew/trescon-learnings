@@ -189,3 +189,21 @@ func GenerateTemporaryUrl(c echo.Context) error {
 		"url": presignedUrl.String(),
 	})
 }
+
+func GetFileMetadata(c echo.Context) error {
+	bucketName := c.Param("bucketName")
+	fileName := c.Param("filename")
+
+	// Pegar os dados do objeto
+	info, err := config.MinioClient.StatObject(context.Background(), bucketName, fileName, minio.StatObjectOptions{})
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, echo.Map{
+		"name":         info.Key,
+		"size":         info.Size,
+		"contentType":  info.ContentType,
+		"lastModified": info.LastModified,
+	})
+}
