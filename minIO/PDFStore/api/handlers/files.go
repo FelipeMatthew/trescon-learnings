@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
+	"time"
 
 	"pdfstore/api/config"
 	"pdfstore/api/utils"
@@ -40,7 +42,6 @@ func GetFiles(c echo.Context) error {
 	})
 }
 
-// TODO: Install files
 func DownloadFiles(c echo.Context) error {
 	bucketName := c.Param("bucketName")
 	localDir := "./files/" + bucketName
@@ -170,4 +171,21 @@ func DeleteFiles(c echo.Context) error {
 	message := "file: " + objectName + " deleted successfuly"
 
 	return c.JSON(http.StatusOK, echo.Map{"message": message})
+}
+
+func GenerateTemporaryUrl(c echo.Context) error {
+	bucketName := c.Param("bucketName")
+	fileName := c.Param("filename")
+
+	temporaryTime := time.Second * 24 * 60 * 60 // One day
+
+	reqParms := make(url.Values)
+	presignedUrl, err := config.MinioClient.PresignedGetObject(context.Background(), bucketName, fileName, temporaryTime, reqParms)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, echo.Map{
+		"url": presignedUrl.String(),
+	})
 }
