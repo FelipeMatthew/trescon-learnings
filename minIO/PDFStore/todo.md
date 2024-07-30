@@ -4,4 +4,4 @@
 4. Fazer docker compose para minio ou os dois unidos
 5. Fazer o install files
 6. Fazer adicionar em diferentes buckets
-7. Aplicar AIR TOML - 
+7. Aplicar AIR TOML - ✅

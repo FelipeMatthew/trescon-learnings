@@ -11,7 +11,7 @@ var MinioClient *minio.Client
 
 func MinioInit() {
 	var err error
-	endpoint := "localhost:9000"
+	endpoint := "host.docker.internal:9000"
 	acessKeyID := "admin"
 	secretAccessKey := "password"
 	useSSL := false
