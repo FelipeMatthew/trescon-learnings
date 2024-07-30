@@ -38,8 +38,9 @@ func DownloadFiles(c echo.Context) error {
 func InsertFiles(c echo.Context) error {
 	// READ FROM BODY - form-data file
 	bucketName := c.Param("bucketName")
-
+	folderPath := c.Param("folder")
 	file, err := c.FormFile("file")
+
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -52,7 +53,7 @@ func InsertFiles(c echo.Context) error {
 	defer src.Close()
 
 	// Create an object in MinIO
-	objectName := file.Filename
+	objectName := folderPath + "/" + file.Filename
 	contentType := file.Header.Get("Content-Type")
 
 	if contentType != "application/pdf" {
