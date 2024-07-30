@@ -12,6 +12,8 @@ services:
       - minio
     networks:
       - app-network
+    env_file:
+      - .env
 
   # Serviço do MinIO
   minio:

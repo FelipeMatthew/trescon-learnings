@@ -15,6 +15,8 @@ WORKDIR /app
 
 COPY --from=build /go/src/ms/pdfstore .
 
+COPY .env .env
+
 EXPOSE 8000
 
 USER nonroot:nonroot

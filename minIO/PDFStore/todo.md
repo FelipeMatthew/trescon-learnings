@@ -5,4 +5,4 @@
 5. Fazer o install files
 6. Fazer adicionar em diferentes buckets - ✅
 7. Aplicar AIR TOML - ✅
-8. Configurar variáveis de ambiente
+8. Configurar variáveis de ambiente - ✅
