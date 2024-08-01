@@ -14,13 +14,16 @@ func StartRoutes(e *echo.Echo) {
 	// Ping
 	e.GET("/ping", handlers.Ping)
 
-	// Admin routes
+	// Admin
 	admin.GET("/", handlers.GetAdmins)
 	admin.POST("/", handlers.CreateAdmin)
 	admin.POST("/login", handlers.Login)
 	admin.DELETE("/:id", handlers.DeleteAdmin)
 
+	// Event
 	event.GET("/", handlers.GetAdmins)
+
+	// Participant
 	participant.GET("/", handlers.GetAdmins)
 
 }
