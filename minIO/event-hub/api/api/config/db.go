@@ -27,17 +27,10 @@ func DatabaseInit() {
 		panic(e)
 	}
 
-	sqlDB, err := database.DB()
+	_, err := database.DB()
 	if err != nil {
 		log.Fatal("failed to get database object from GORM DB:", err)
 	}
-
-	err = sqlDB.Ping()
-	if err != nil {
-		log.Fatal("failed to ping database:", err)
-	}
-
-	fmt.Println("Database connection successful")
 }
 
 func DB() *gorm.DB {

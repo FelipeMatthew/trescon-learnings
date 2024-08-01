@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/minio/minio-go/v7"
@@ -25,6 +24,4 @@ func MinioInit() {
 	if err != nil {
 		log.Fatalf("Failed to initialize MinIO client: %v", err)
 	}
-
-	fmt.Println("MinIO connection successful")
 }
