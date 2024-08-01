@@ -13,6 +13,7 @@ func main() {
 
 	routes.StartRoutes(e)
 
+	config.MinioInit()
 	config.DatabaseInit()
 
 	log.Fatal(e.Start(":8000"))
