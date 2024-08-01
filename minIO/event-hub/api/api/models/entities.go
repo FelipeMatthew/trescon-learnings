@@ -23,7 +23,7 @@ type Event struct {
 type Participant struct {
 	Id           uint   `gorm:"primaryKey"`
 	ProfileImage string `json:"profile_image"`
-	EventId      uint   `json:"event_id"` // Chave estrangeira
+	EventId      []uint `json:"event_id"` // Chave estrangeira
 	DocumentFile string `json:"document_file"`
 	FirstName    string `json:"first_name"`
 	LastName     string `json:"last_name"`
