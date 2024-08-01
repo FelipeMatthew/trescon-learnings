@@ -68,3 +68,33 @@ func Login(c echo.Context) error {
 
 	return c.JSON(http.StatusUnauthorized, echo.Map{"message": "Invalid credentials"})
 }
+
+func DeleteAdmin(c echo.Context) error {
+	db := config.DB()
+
+	id := c.Param("id")
+	admin := new(models.Admin)
+
+	if err := db.Find(&admin, id).Error; err != nil {
+		c.JSON(http.StatusBadRequest, echo.Map{
+			"error": err.Error(),
+		})
+	}
+
+	if admin.Id == 0 {
+		return c.JSON(http.StatusInternalServerError, "id not founded")
+	}
+
+	if err := db.Delete(&admin, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
+		return c.JSON(http.StatusInternalServerError, data)
+	}
+
+	response := echo.Map{
+		"data": "admin deleted successfully",
+	}
+
+	return c.JSON(http.StatusOK, response)
+}

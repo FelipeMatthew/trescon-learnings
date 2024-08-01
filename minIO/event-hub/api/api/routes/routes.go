@@ -18,6 +18,7 @@ func StartRoutes(e *echo.Echo) {
 	admin.GET("/", handlers.GetAdmins)
 	admin.POST("/", handlers.CreateAdmin)
 	admin.POST("/login", handlers.Login)
+	admin.DELETE("/:id", handlers.DeleteAdmin)
 
 	event.GET("/", handlers.GetAdmins)
 	participant.GET("/", handlers.GetAdmins)
