@@ -17,12 +17,13 @@ type Event struct {
 	Location     string        `json:"location"`
 	TicketPrice  float32       `json:"ticket_price"`
 	ImageUrl     string        `json:"image_url"`
-	Participants []Participant `json:"participants"`
+	Participants []Participant `gorm:"foreignKey:EventId" json:"participants"`
 }
 
 type Participant struct {
 	Id           uint   `gorm:"primaryKey"`
 	ProfileImage string `json:"profile_image"`
+	EventId      uint   `json:"event_id"` // Chave estrangeira
 	DocumentFile string `json:"document_file"`
 	FirstName    string `json:"first_name"`
 	LastName     string `json:"last_name"`
