@@ -1,0 +1,1 @@
+dart compile js -o script.js script.dart
