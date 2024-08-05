@@ -11,10 +11,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String result = "Resultado da soma: ";
+  double num1 = 0.0;
+  double num2 = 0.0;
+
+  calculateValue() {
+    setState(() {
+      double cal = num1 + num2;
+      this.result = "the sum result is: ${cal.toStringAsFixed(0)}";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Component
-    const numberOne = TextField(
+    TextField numberOne = TextField(
       // input type from keyboard
       keyboardType: TextInputType.number,
       style: TextStyle(color: Colors.black),
@@ -24,15 +35,14 @@ class _MyAppState extends State<MyApp> {
           color: Colors.deepPurpleAccent,
         ),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)
-        ),
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)
-        ),
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)),
       ),
+      onChanged: (value) => num1 = double.parse(value),
     );
 
-    const numberTwo = TextField(
+    TextField numberTwo = TextField(
       // input type from keyboard
       keyboardType: TextInputType.number,
       style: TextStyle(color: Colors.black),
@@ -42,16 +52,15 @@ class _MyAppState extends State<MyApp> {
           color: Colors.deepPurpleAccent,
         ),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)
-        ),
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)
-        ),
+            borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0)),
       ),
+      onChanged: (value) => num2 = double.parse(value),
     );
 
     ElevatedButton button = ElevatedButton(
-      onPressed: () {},
+      onPressed: calculateValue,
       child: Text('Calcular'),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurpleAccent[400], // Cor de fundo roxo
@@ -59,7 +68,14 @@ class _MyAppState extends State<MyApp> {
       ),
     );
 
-    Padding separator = Padding(padding: EdgeInsets.all(4.5));  
+    Text result = Text(
+      this.result,
+      style: TextStyle(
+        color: Colors.deepPurpleAccent[400],
+      ),
+    );
+
+    Padding separator = Padding(padding: EdgeInsets.all(4.5));
 
     Column columns = Column(
       children: <Widget>[
@@ -71,6 +87,8 @@ class _MyAppState extends State<MyApp> {
           child: button,
           width: double.infinity,
         ),
+        separator,
+        result,
       ],
     );
 
