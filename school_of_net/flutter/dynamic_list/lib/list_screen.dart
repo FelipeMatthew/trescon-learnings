@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
@@ -8,6 +10,14 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+
+  void _addToDo() {
+    setState(() {
+      int random = new Random().nextInt(100);
+      todo.add('Task $random');
+    });
+  }
+
   List<String> todo = [
     'To do 1',
     'To do 2',
@@ -32,7 +42,7 @@ class _ListScreenState extends State<ListScreen> {
         itemBuilder: (BuildContext context, index) {
           return ListTile(
             onTap: () {},
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               child: IconTheme(
               child: Icon(Icons.ac_unit),
               data: IconThemeData(
@@ -47,6 +57,11 @@ class _ListScreenState extends State<ListScreen> {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pinkAccent,
+        child: Icon(Icons.add),
+        onPressed: _addToDo,
       ),
     );
   }
