@@ -11,17 +11,22 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  void _addItem() async {
+    final item = await showDialog<ShoppingItem>(
+      context: context,
+      builder: (BuildContext context) {
+        return AddItem();
+      },
+    );
 
-  void _addItem() {
-      showDialog(
-        context: context, 
-        builder: (BuildContext context) {
-          return AddItem();
-        },
-      );
+    if (item != null) {
+      setState(() {
+        myItems.add(item);
+      });
     }
+  }
 
-  List<ShoppingItem> shoppingItems = [
+  List<ShoppingItem> myItems = [
     ShoppingItem(title: 'Comprar feijão', isDone: true),
     ShoppingItem(title: 'Comprar Arroz'),
     ShoppingItem(title: 'Comprar cuscus'),
@@ -30,7 +35,6 @@ class _ListScreenState extends State<ListScreen> {
     ShoppingItem(title: 'Comprar ciclano'),
     ShoppingItem(title: 'Comprar pipoca'),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,9 +48,9 @@ class _ListScreenState extends State<ListScreen> {
         separatorBuilder: (context, index) => const Divider(
           color: Colors.redAccent,
         ),
-        itemCount: shoppingItems.length,
+        itemCount: myItems.length,
         itemBuilder: (context, index) {
-          final item = shoppingItems[index];
+          final item = myItems[index];
 
           return ListTile(
             onTap: () {},
