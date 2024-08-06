@@ -48,12 +48,11 @@ class MenuDrawer extends StatelessWidget {
               )),
         ),
         // Options
-        Divider(height: 5),
         _itemDrawer(Icon(Icons.home, color: Colors.blue,), 'Home'),
         _itemDrawer(Icon(Icons.list), 'Departamentos'),
         _itemDrawer(Icon(Icons.favorite), 'Favoritos'),
         _itemDrawer(Icon(Icons.shopping_bag), 'Sacola'),
-        Divider(color: Colors.blue,thickness: 5,),
+        Divider(thickness: 2),
         _itemDrawer(Icon(Icons.account_circle), 'Minha conta'),
         _itemDrawer(Icon(Icons.logout), 'Sair'),
       ],
