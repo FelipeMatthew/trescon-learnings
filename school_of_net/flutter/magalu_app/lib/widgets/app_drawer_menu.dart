@@ -48,24 +48,45 @@ class MenuDrawer extends StatelessWidget {
               )),
         ),
         // Options
-        _itemDrawer(Icon(Icons.home, color: Colors.blue,), 'Home'),
-        _itemDrawer(Icon(Icons.list), 'Departamentos'),
-        _itemDrawer(Icon(Icons.favorite), 'Favoritos'),
-        _itemDrawer(Icon(Icons.shopping_bag), 'Sacola'),
-        Divider(thickness: 2),
-        _itemDrawer(Icon(Icons.account_circle), 'Minha conta'),
-        _itemDrawer(Icon(Icons.logout), 'Sair'),
+        _itemDrawer(
+            icon: const Icon(
+              Icons.home,
+              color: Colors.blue,
+            ),
+            text: 'Home'),
+        _itemDrawer(
+            icon: const Icon(Icons.list), text: 'Departamentos', badge: ''),
+        const Divider(thickness: 2),
+        _itemDrawer(icon: const Icon(Icons.favorite), text: 'Favoritos'),
+        _itemDrawer(icon: const Icon(Icons.shopping_bag), text: 'Sacola'),
+        _itemDrawer(
+            icon: const Icon(Icons.account_circle), text: 'Minha conta'),
+        const Divider(thickness: 2),
+        _itemDrawer(icon: const Icon(Icons.logout), text: 'Sair'),
       ],
     );
   }
 
-  Widget _itemDrawer(Icon icon, String text ) {
+  Widget _itemDrawer(
+      {required Icon icon, required String text, String badge = ''}) {
     return ListTile(
       leading: IconTheme(
         data: IconThemeData(),
         child: icon,
       ),
       title: Text(text),
+      trailing: Container(
+        decoration: BoxDecoration( borderRadius: BorderRadius.circular(100)),
+        child: badge != ''
+          ? Padding(
+              padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
+              child: Text(
+                badge,
+                style: TextStyle(backgroundColor: Colors.blue),
+              ),
+            )
+          : Icon(Icons.arrow_forward_ios, size: 10),
+      ),
       onTap: () {},
     );
   }
