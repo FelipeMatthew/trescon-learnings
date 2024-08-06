@@ -31,7 +31,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       // * Menu drawer
-      drawer: const Drawer(child: MenuDrawer()),
+      drawer: const Drawer(width: 250, child: MenuDrawer(), ),
       appBar: AppBar(
         title: const Text(
           'Magazine Luiza',
