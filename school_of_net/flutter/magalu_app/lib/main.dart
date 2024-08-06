@@ -16,11 +16,16 @@ class _MyAppState extends State<MyApp> {
       title: 'Magalu clone app',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Magazine Luiza'),
-          titleTextStyle: TextStyle(color: Colors.white),
+          title: const Text(
+            'Magazine Luiza',
+          ),
+          titleTextStyle: const TextStyle(color: Colors.white, fontSize: 22.0),
           backgroundColor: Colors.blue,
+          actions: <Widget>[IconButton(onPressed: onPressed, icon: icon)],
         ),
-        body: Center(child: Text('Home Magazine Luiza'),),
+        body: Center(
+          child: Text('Home Magazine Luiza'),
+        ),
       ),
     );
   }
