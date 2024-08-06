@@ -26,15 +26,7 @@ class _ListScreenState extends State<ListScreen> {
     }
   }
 
-  List<ShoppingItem> myItems = [
-    ShoppingItem(title: 'Comprar feijão', isDone: true),
-    ShoppingItem(title: 'Comprar Arroz'),
-    ShoppingItem(title: 'Comprar cuscus'),
-    ShoppingItem(title: 'Comprar mandioca'),
-    ShoppingItem(title: 'Comprar jararaca'),
-    ShoppingItem(title: 'Comprar ciclano'),
-    ShoppingItem(title: 'Comprar pipoca'),
-  ];
+  List<ShoppingItem> myItems = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +45,17 @@ class _ListScreenState extends State<ListScreen> {
           final item = myItems[index];
 
           return ListTile(
-            onTap: () {},
+            onTap: () {
+              setState(() {
+                myItems[index].isDone = !myItems[index].isDone;
+              });
+            },
+            onLongPress: () {}, // Segurar
             leading: CircleAvatar(
               backgroundColor: Colors.redAccent,
               child: IconTheme(
-                child: Icon(Icons.done),
-                data: IconThemeData(color: Colors.white),
+                data: const IconThemeData(color: Colors.white),
+                child: Icon(item.isDone ? Icons.done_all : Icons.done),
               ),
             ),
             title: Text(
