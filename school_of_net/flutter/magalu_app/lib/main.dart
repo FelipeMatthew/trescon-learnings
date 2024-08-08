@@ -30,29 +30,43 @@ class _HomeMyAppState extends State<HomeMyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // * Menu drawer
-      drawer: const Drawer(width: 250, child: MenuDrawer(), ),
-      appBar: AppBar(
-        title: const Text(
-          'Magazine Luiza',
+        // * Menu drawer
+        drawer: const Drawer(
+          width: 250,
+          child: MenuDrawer(),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
-        titleTextStyle: const TextStyle(
-            color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-        backgroundColor: Colors.blue,
-        actions: <Widget>[
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
-          IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: AppSearchBar());
-              },
-              icon: const Icon(Icons.search)),
-        ],
-      ),
-      body: const Center(
-        child: Text('Home Magazine Luiza'),
-      ),
-    );
+        appBar: AppBar(
+          title: const Text(
+            'Magazine Luiza',
+          ),
+          iconTheme: const IconThemeData(color: Colors.white),
+          titleTextStyle: const TextStyle(
+              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+          backgroundColor: Colors.blue,
+          actions: <Widget>[
+            IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: AppSearchBar());
+                },
+                icon: const Icon(Icons.search)),
+          ],
+        ),
+        body: RefreshIndicator(
+          onRefresh: _refresh,
+          child: Center(
+            child: Text('Home Magazine Luiza!'),
+          ),
+        ));
+  }
+
+  Future<void> _refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+
+    setState(() {
+      Future.value();
+    });
+    return Future.value();
   }
 }
 

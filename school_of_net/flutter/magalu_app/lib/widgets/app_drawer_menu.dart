@@ -76,16 +76,16 @@ class MenuDrawer extends StatelessWidget {
       ),
       title: Text(text),
       trailing: Container(
-        decoration: BoxDecoration( borderRadius: BorderRadius.circular(100)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
         child: badge != ''
-          ? Padding(
-              padding: EdgeInsets.fromLTRB(8, 2, 8, 2),
-              child: Text(
-                badge,
-                style: TextStyle(backgroundColor: Colors.blue),
-              ),
-            )
-          : Icon(Icons.arrow_forward_ios, size: 10),
+            ? Padding(
+                padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
+                child: Text(
+                  badge,
+                  style: const TextStyle(backgroundColor: Colors.blue),
+                ),
+              )
+            : Icon(Icons.arrow_forward_ios, size: 10),
       ),
       onTap: () {},
     );
