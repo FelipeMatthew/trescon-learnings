@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
                   Container(
                     height: 50,
                   ),
-                  CircularProgressIndicator(
+                  const CircularProgressIndicator(
                     color: Colors.blue,
                   ),
                   Container(
