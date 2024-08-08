@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:magalu_app/pages/home.dart';
+import 'package:magalu_app/pages/shopping_cart.dart';
 import 'package:magalu_app/widgets/app_bar_search.dart';
 import 'package:magalu_app/widgets/app_drawer_menu.dart';
 
@@ -44,7 +46,14 @@ class _HomeMyAppState extends State<HomeMyApp> {
               color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
           backgroundColor: Colors.blue,
           actions: <Widget>[
-            IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ShoppingCart()));
+                },
+                icon: const Icon(Icons.shopping_cart)),
             IconButton(
                 onPressed: () {
                   showSearch(context: context, delegate: AppSearchBar());
@@ -54,9 +63,7 @@ class _HomeMyAppState extends State<HomeMyApp> {
         ),
         body: RefreshIndicator(
           onRefresh: _refresh,
-          child: Center(
-            child: Text('Home Magazine Luiza!'),
-          ),
+          child: Home(),
         ));
   }
 

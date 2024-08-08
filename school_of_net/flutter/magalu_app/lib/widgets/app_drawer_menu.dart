@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:magalu_app/main.dart';
+import 'package:magalu_app/pages/bag.dart';
+import 'package:magalu_app/pages/department.dart';
+import 'package:magalu_app/pages/favorite.dart';
+import 'package:magalu_app/pages/home.dart';
+import 'package:magalu_app/pages/my_account.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({super.key});
@@ -49,29 +55,54 @@ class MenuDrawer extends StatelessWidget {
         ),
         // Options
         _itemDrawer(
+            page: const HomeMyApp(),
+            context: context,
             icon: const Icon(
               Icons.home,
               color: Colors.blue,
             ),
             text: 'Home'),
         _itemDrawer(
-            icon: const Icon(Icons.list), text: 'Departamentos', badge: ''),
+            page: const Department(),
+            context: context,
+            icon: const Icon(Icons.list),
+            text: 'Departamentos',
+            badge: ''),
         const Divider(thickness: 2),
-        _itemDrawer(icon: const Icon(Icons.favorite), text: 'Favoritos'),
-        _itemDrawer(icon: const Icon(Icons.shopping_bag), text: 'Sacola'),
         _itemDrawer(
-            icon: const Icon(Icons.account_circle), text: 'Minha conta'),
+            page: const Favorite(),
+            context: context,
+            icon: const Icon(Icons.favorite),
+            text: 'Favoritos'),
+        _itemDrawer(
+            page: const Bag(),
+            context: context,
+            icon: const Icon(Icons.shopping_bag),
+            text: 'Sacola'),
+        _itemDrawer(
+            page: const MyAccount(),
+            context: context,
+            icon: const Icon(Icons.account_circle),
+            text: 'Minha conta'),
         const Divider(thickness: 2),
-        _itemDrawer(icon: const Icon(Icons.logout), text: 'Sair'),
+        _itemDrawer(
+            page: const HomeMyApp(),
+            context: context,
+            icon: const Icon(Icons.logout),
+            text: 'Sair'),
       ],
     );
   }
 
   Widget _itemDrawer(
-      {required Icon icon, required String text, String badge = ''}) {
+      {required context,
+      required page,
+      required Icon icon,
+      required String text,
+      String badge = ''}) {
     return ListTile(
       leading: IconTheme(
-        data: IconThemeData(),
+        data: const IconThemeData(),
         child: icon,
       ),
       title: Text(text),
@@ -85,9 +116,11 @@ class MenuDrawer extends StatelessWidget {
                   style: const TextStyle(backgroundColor: Colors.blue),
                 ),
               )
-            : Icon(Icons.arrow_forward_ios, size: 10),
+            : const Icon(Icons.arrow_forward_ios, size: 10),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+      },
     );
   }
 }
