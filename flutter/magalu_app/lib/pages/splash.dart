@@ -16,7 +16,8 @@ class _SplashState extends State<Splash> {
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
-    Future.delayed(const Duration(seconds: 5)).then((_) {
+    // Async
+    _checkAuth().then((_) {
       // Close the splash screen
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomeMyApp()));
@@ -53,5 +54,10 @@ class _SplashState extends State<Splash> {
                 ],
               ),
             )));
+  }
+
+// Verification user or login async method
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 5));
   }
 }
