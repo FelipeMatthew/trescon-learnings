@@ -44,9 +44,11 @@ class _HomeMyAppState extends State<HomeMyApp> {
                 icon: const Icon(Icons.search)),
           ],
         ),
-        body: RefreshIndicator(
-          onRefresh: _refresh,
-          child: const Text('to'),
+        body: Center(
+          child: RefreshIndicator(
+            onRefresh: _refresh,
+            child: const Text('Hello magazine luiza'),
+          ),
         ));
   }
 

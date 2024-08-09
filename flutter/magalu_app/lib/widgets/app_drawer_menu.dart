@@ -5,6 +5,7 @@ import 'package:magalu/pages/department.dart';
 import 'package:magalu/pages/favorite.dart';
 import 'package:magalu/pages/home.dart';
 import 'package:magalu/pages/my_account.dart';
+import 'package:magalu/pages/splash.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({super.key});
@@ -86,7 +87,7 @@ class MenuDrawer extends StatelessWidget {
             text: 'Minha conta'),
         const Divider(thickness: 2),
         _itemDrawer(
-            page: const HomeMyApp(),
+            page: const Splash(),
             context: context,
             icon: const Icon(Icons.logout),
             text: 'Sair'),

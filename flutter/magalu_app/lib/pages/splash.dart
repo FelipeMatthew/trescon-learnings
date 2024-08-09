@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:magalu/pages/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -14,6 +15,12 @@ class _SplashState extends State<Splash> {
     super.initState();
 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    Future.delayed(const Duration(seconds: 5)).then((_) {
+      // Close the splash screen
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomeMyApp()));
+    });
   }
 
   @override
