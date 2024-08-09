@@ -7,14 +7,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: 400,
-        width: double.maxFinite,
-        color: Colors.black,
-        child: const Icon(
-          Icons.access_alarm,
-          color: Colors.white,
-        ),
-      ),
+          width: double.maxFinite,
+          decoration: const BoxDecoration(
+              color: Colors.black,
+              borderRadius:
+                  BorderRadius.only(bottomLeft: Radius.circular(100))),
+          child: Padding(
+            padding: const EdgeInsets.all(70),
+            child: Image.asset(
+              'images/github-logo.png',
+              height: 200,
+            ),
+          )),
     );
   }
 }
