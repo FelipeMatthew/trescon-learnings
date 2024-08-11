@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:github_finder/pages/results.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -59,7 +60,12 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                     width: double.maxFinite,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ResultsScreen()));
+                        },
                         style: const ButtonStyle(
                             padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(
                                 EdgeInsets.fromLTRB(40, 10, 40, 10)),
