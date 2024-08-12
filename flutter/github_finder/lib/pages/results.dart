@@ -34,7 +34,86 @@ class ResultsScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Center(
-        child: Text('Hii'),
+        child: FutureBuilder<User>(
+            future: fetchUser(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(
+                  backgroundColor: Colors.white,
+                );
+              } else if (snapshot.hasError) {
+                return Text(
+                  "Error: ${snapshot.error}",
+                  style: const TextStyle(color: Colors.white),
+                );
+              } else if (snapshot.hasData) {
+                // Valida se tem dados
+                final user = snapshot.data!;
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                          user.avatar_url,
+                          height: 200,
+                        ),
+                      ),
+                      Container(
+                        height: 20,
+                      ),
+                      Text(
+                        user.name,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      Container(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              "Seguidores: ${user.followers}",
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
+                          ),
+                          Text(
+                            "Repositórios: ${user.public_repos}",
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text(
+                            "Procurar novo perfil",
+                            style: TextStyle(color: Colors.black),
+                          ))
+                    ],
+                  ),
+                );
+              } else {
+                return const Text(
+                  "No data found",
+                  style: TextStyle(color: Colors.white),
+                );
+              }
+            }),
       ),
     );
   }
