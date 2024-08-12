@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:github_finder/pages/home.dart';
 import 'package:github_finder/pages/splash.dart';
 
 // TODO: Splash screen
