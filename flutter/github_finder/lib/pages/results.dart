@@ -5,11 +5,13 @@ import 'package:github_finder/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class ResultsScreen extends StatelessWidget {
-  const ResultsScreen({super.key});
+  final String username;
+
+  const ResultsScreen({super.key, required this.username});
 
   // HTTP REQUEST! SZ
   Future<User> fetchUser() async {
-    var url = Uri.https('api.github.com', '/users/felipematthew');
+    var url = Uri.https('api.github.com', '/users/$username');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
