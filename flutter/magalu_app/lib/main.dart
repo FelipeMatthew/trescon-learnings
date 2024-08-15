@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:magalu_app/pages/home.dart';
-import 'package:magalu_app/pages/shopping_cart.dart';
-import 'package:magalu_app/widgets/app_bar_search.dart';
-import 'package:magalu_app/widgets/app_drawer_menu.dart';
+import 'package:magalu/main.dart';
+import 'package:magalu/pages/home.dart';
+import 'package:magalu/pages/shopping_cart.dart';
+import 'package:magalu/pages/splash.dart';
+import 'package:magalu/widgets/app_bar_search.dart';
+import 'package:magalu/widgets/app_drawer_menu.dart';
 
 // Para funcionar ferramenta de pesquisa precisa iniciar como stateless - estática, podendo assim dentro dela passar statefull;
 void main() => runApp(const MyApp());
@@ -14,70 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Magalu clone app',
-      home: HomeMyApp(),
+      home: Splash(),
     );
   }
 }
 
 // TODO: New File
-class HomeMyApp extends StatefulWidget {
-  const HomeMyApp({super.key});
-
-  @override
-  State<HomeMyApp> createState() => _HomeMyAppState();
-}
-
-class _HomeMyAppState extends State<HomeMyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        // * Menu drawer
-        drawer: const Drawer(
-          width: 250,
-          child: MenuDrawer(),
-        ),
-        appBar: AppBar(
-          title: const Text(
-            'Magazine Luiza',
-          ),
-          iconTheme: const IconThemeData(color: Colors.white),
-          titleTextStyle: const TextStyle(
-              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
-          backgroundColor: Colors.blue,
-          actions: <Widget>[
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ShoppingCart()));
-                },
-                icon: const Icon(Icons.shopping_cart)),
-            IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: AppSearchBar());
-                },
-                icon: const Icon(Icons.search)),
-          ],
-        ),
-        body: RefreshIndicator(
-          onRefresh: _refresh,
-          child: Home(),
-        ));
-  }
-
-  Future<void> _refresh() async {
-    await Future.delayed(Duration(seconds: 2));
-
-    setState(() {
-      Future.value();
-    });
-    return Future.value();
-  }
-}
-
-
-
-// TODO Create scafold file 
- 
