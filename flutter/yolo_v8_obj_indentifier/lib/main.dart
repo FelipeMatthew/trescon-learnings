@@ -12,3 +12,4 @@ class MyApp extends StatelessWidget {
         title: 'YOLO OBJECT IDENTIFIER', home: YoloVideo());
   }
 }
+ 

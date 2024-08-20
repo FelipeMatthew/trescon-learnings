@@ -170,8 +170,11 @@ class _YoloVideoState extends State<YoloVideo> {
 
   List<Widget> displayBoxesAroundRecognizedObjects(Size screen) {
     if (yoloResults.isEmpty) return [];
-    double factorX = screen.width / (cameraImage?.height ?? 1);
-    double factorY = screen.height / (cameraImage?.width ?? 1);
+
+    // Verifica se a visualização da câmera está corretamente inicializada
+    double factorX = screen.width / (controller.value.previewSize?.width ?? 1);
+    double factorY =
+        screen.height / (controller.value.previewSize?.height ?? 1);
 
     Color colorPick = const Color.fromARGB(255, 50, 233, 30);
 
@@ -180,6 +183,10 @@ class _YoloVideoState extends State<YoloVideo> {
       double objectY = result["box"][1] * factorY;
       double objectWidth = (result["box"][2] - result["box"][0]) * factorX;
       double objectHeight = (result["box"][3] - result["box"][1]) * factorY;
+
+      // Log para depuração
+      print(
+          "Object: ${result['tag']}, X: $objectX, Y: $objectY, Width: $objectWidth, Height: $objectHeight");
 
       speak() {
         String currentResult = result['tag'].toString();
@@ -206,9 +213,9 @@ class _YoloVideoState extends State<YoloVideo> {
             border: Border.all(color: Colors.pink, width: 2.0),
           ),
           child: Text(
-            "${result['tag']} ${(result['box'][4] * 100)}",
+            "${result['tag']} ${(result['box'][4] * 100).toStringAsFixed(1)}%",
             style: TextStyle(
-              background: Paint()..color = colorPick,
+              background: Paint()..color = colorPick.withOpacity(0.5),
               color: const Color.fromARGB(255, 115, 0, 255),
               fontSize: 18.0,
             ),
@@ -216,5 +223,5 @@ class _YoloVideoState extends State<YoloVideo> {
         ),
       );
     }).toList();
-  }
+}
 }
