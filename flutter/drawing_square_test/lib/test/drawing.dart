@@ -16,11 +16,12 @@ class _DesenhandoQuadradoState extends State<DesenhandoQuadrado> {
   final GlobalKey _globalKey = GlobalKey();
   final List<Offset> _pontos = [];
   ui.Image? _image;
+  List<String> _coordenadas = [];
 
   @override
   void initState() {
     super.initState();
-    _loadImage('assets/tubo.png');
+    _loadImage('assets/tubo.jpg');
   }
 
   Future<void> _loadImage(String path) async {
@@ -47,6 +48,9 @@ class _DesenhandoQuadradoState extends State<DesenhandoQuadrado> {
           ponto.dy <= top + imageHeight) {
         setState(() {
           _pontos.add(ponto);
+          // adicionando coordenadas
+          _coordenadas.add(
+              '${ponto.dx.toStringAsFixed(2)}, ${ponto.dy.toStringAsFixed(2)}');
         });
       }
     }
@@ -100,6 +104,23 @@ class _DesenhandoQuadradoState extends State<DesenhandoQuadrado> {
             child: ElevatedButton(
               onPressed: _navegarParaImagemEditada,
               child: const Text('Ver Imagem'),
+            ),
+          ),
+          Positioned(
+            bottom: 60,
+            left: 20,
+            right: 20,
+            child: Container(
+              height: 200,
+              color: Colors.white,
+              child: ListView.builder(
+                itemCount: _coordenadas.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text('Clique ${index + 1}: ${_coordenadas[index]}'),
+                  );
+                },
+              ),
             ),
           ),
         ],
