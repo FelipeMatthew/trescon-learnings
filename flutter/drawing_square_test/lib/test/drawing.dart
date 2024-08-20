@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:drawing_square_test/test/result.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
 class DesenhandoQuadrado extends StatefulWidget {
@@ -10,13 +13,14 @@ class DesenhandoQuadrado extends StatefulWidget {
 }
 
 class _DesenhandoQuadradoState extends State<DesenhandoQuadrado> {
+  final GlobalKey _globalKey = GlobalKey();
   final List<Offset> _pontos = [];
   ui.Image? _image;
 
   @override
   void initState() {
     super.initState();
-    _loadImage('assets/tubo.jpg');
+    _loadImage('assets/tubo.png');
   }
 
   Future<void> _loadImage(String path) async {
@@ -29,25 +33,82 @@ class _DesenhandoQuadradoState extends State<DesenhandoQuadrado> {
   }
 
   void _adicionarQuadrado(Offset ponto) {
-    setState(() {
-      _pontos.add(ponto);
-    });
+    if (_image != null) {
+      // Calcule as dimensões e posição da imagem
+      final double imageWidth = _image!.width.toDouble();
+      final double imageHeight = _image!.height.toDouble();
+      final double left = (MediaQuery.of(context).size.width - imageWidth) / 2;
+      final double top = (MediaQuery.of(context).size.height - imageHeight) / 2;
+
+      // Verifique se o ponto está dentro dos limites da imagem
+      if (ponto.dx >= left &&
+          ponto.dx <= left + imageWidth &&
+          ponto.dy >= top &&
+          ponto.dy <= top + imageHeight) {
+        setState(() {
+          _pontos.add(ponto);
+        });
+      }
+    }
+  }
+
+  Future<void> _navegarParaImagemEditada() async {
+    final Uint8List? imageData = await _capturarImagem();
+    if (imageData != null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => Resultado(imageData: imageData),
+        ),
+      );
+    }
+  }
+
+  Future<Uint8List?> _capturarImagem() async {
+    try {
+      RenderRepaintBoundary boundary = _globalKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage();
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      return byteData?.buffer.asUint8List();
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (TapDownDetails detalhes) {
-        RenderBox box = context.findRenderObject() as RenderBox;
-        Offset localPosition = box.globalToLocal(detalhes.globalPosition);
-        _adicionarQuadrado(localPosition);
-      },
-      child: CustomPaintContainer(pontos: _pontos, image: _image),
+    return Scaffold(
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTapDown: (TapDownDetails detalhes) {
+              RenderBox box = context.findRenderObject() as RenderBox;
+              Offset localPosition = box.globalToLocal(detalhes.globalPosition);
+              _adicionarQuadrado(localPosition);
+            },
+            child: RepaintBoundary(
+              key: _globalKey,
+              child: CustomPaintContainer(pontos: _pontos, image: _image),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: ElevatedButton(
+              onPressed: _navegarParaImagemEditada,
+              child: const Text('Ver Imagem'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class CustomPaintContainer extends StatefulWidget {
+class CustomPaintContainer extends StatelessWidget {
   final List<Offset> pontos;
   final ui.Image? image;
 
@@ -56,15 +117,10 @@ class CustomPaintContainer extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CustomPaintContainer> createState() => _CustomPaintContainerState();
-}
-
-class _CustomPaintContainerState extends State<CustomPaintContainer> {
-  @override
   Widget build(BuildContext context) {
     return CustomPaint(
       size: Size.infinite,
-      painter: QuadradoPainter(pontos: widget.pontos, image: widget.image),
+      painter: QuadradoPainter(pontos: pontos, image: image),
     );
   }
 }
@@ -100,6 +156,6 @@ class QuadradoPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true; // Force repaint every time.
+    return true;
   }
 }
