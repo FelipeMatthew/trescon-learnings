@@ -1,8 +1,19 @@
 import cv2 as cv
 
-img = cv.imread('images/animais02.jpg')
+# Images
+# img = cv.imread('images/animais02.jpg')
+# cv.imshow('Animais', img)
 
-cv.imshow('Animais', img)
+# Videos 
+capture = cv.VideoCapture('videos/cachorro.mp4')
 
-# close w/ any key
-cv.waitKey(0)
+while True:
+  # Frame by frame
+  isTrue, frame = capture.read()
+  cv.imshow('Video', frame)
+  
+  if cv.waitKey(20) & 0xFF==ord('x'):
+    break
+
+capture.release()
+cv.destroyAllWindows()
