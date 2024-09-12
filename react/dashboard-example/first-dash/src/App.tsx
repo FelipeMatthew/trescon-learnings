@@ -1,10 +1,20 @@
+import { useState } from 'react';
+import Main from './components/Main';
+import Sidebar from './components/Sidebar';
 import './index.css';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(true);
+  
+  const toggleSideBar = () => {
+    setIsOpen(!isOpen)
+  } 
+
   return (
-    <>
-      <p className="font-bold text-3xl text-purple-500">Hii from</p>
-    </>
+    <div className='flex h-screen font-sans'>
+      <Sidebar isOpen={isOpen} toggleSideBar={toggleSideBar}/>
+      <Main/> 
+    </div>
   );
 }
 
