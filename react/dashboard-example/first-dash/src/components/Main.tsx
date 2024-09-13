@@ -1,13 +1,18 @@
-import Categories from './Categories';
-import Header from './Header';
+import ApexChart from "./ApexChart";
+import Categories from "./Categories";
+import Header from "./Header";
 
 const Main = () => {
   return (
-    <div>
-      <Header/>
-      <Categories/>
-    </div>
-  )
-}
+    <div className="flex-1">
+      <Header />
+      <Categories />
 
-export default Main
+      <div className="flex gap-4 p-10">
+        <ApexChart />
+      </div>
+    </div>
+  );
+};
+
+export default Main;
