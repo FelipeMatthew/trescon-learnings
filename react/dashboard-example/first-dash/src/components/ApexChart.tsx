@@ -57,6 +57,7 @@ const ApexChart = () => {
             height={350}
           />
         </div>
+        <div id="html-dist"></div>
       </div>
     </div>
   );
