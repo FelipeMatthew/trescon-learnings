@@ -34,7 +34,7 @@ const Sidebar: React.FC<Props> = ({ toggleSideBar, isOpen }) => {
           {menuList.map((item, index) => (
             <li
               key={index}
-              className="flex text-xl items-center gap-3 cursor-pointer hover:text-gray-400"
+              className="flex text-xl items-center gap-3 cursor-pointer hover:text-gray-400 ml-2"
             >
               <span>{item.icon}</span>
               <span className={`${isOpen ? "" : "hidden"} duration-300`}>
