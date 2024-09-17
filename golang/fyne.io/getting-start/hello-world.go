@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func main() {
+func helloWorld() {
 	a := app.New()
 	w := a.NewWindow("Hello World")
 
