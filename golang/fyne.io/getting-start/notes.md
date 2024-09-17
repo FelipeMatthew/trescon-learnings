@@ -1,0 +1,1 @@
+go install -x fyne.io/fyne/v2/cmd/fyne_demo@latest
