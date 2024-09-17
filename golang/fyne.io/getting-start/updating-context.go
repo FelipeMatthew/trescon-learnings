@@ -13,7 +13,7 @@ func updateTime(clock *widget.Label) {
 	clock.SetText(formatted)
 }
 
-func main() {
+func clock() {
 	a := app.New()
 	w := a.NewWindow("Clock")
 
