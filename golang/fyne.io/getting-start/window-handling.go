@@ -6,7 +6,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func main() {
+func windowHandling() {
 	a := app.New()
 	w := a.NewWindow("")
 
