@@ -10,14 +10,13 @@ import (
 
 func main() {
 	a := app.New()
-	w := a.NewWindow("Circle")
+	w := a.NewWindow("Line")
 	w.Resize(fyne.NewSize(400, 400))
 
-	circle1 := canvas.NewCircle(color.Black)
-	circle1.StrokeColor = color.White
-	circle1.StrokeWidth = 3
-	circle1.FillColor = color.Transparent
+	line := canvas.NewLine(color.Black)
+	line.StrokeColor = color.NRGBA{R: 255, G: 255, B: 0, A: 255}
 
-	w.SetContent(circle1)
+	w.SetContent(line)
+
 	w.ShowAndRun()
 }
