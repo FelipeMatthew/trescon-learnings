@@ -79,15 +79,6 @@ func main() {
 	w.ShowAndRun()
 }
 
-func incrementMove(x uint8) (a uint8) {
-	if x == 255 {
-		x = 0
-	} else if x == 0 {
-		x = 255
-	}
-	return x
-}
-
 func reset(r1, r2, r3 *canvas.Circle) {
 	r1.FillColor = color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 	r2.FillColor = color.NRGBA{R: 255, G: 255, B: 255, A: 255}
