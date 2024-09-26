@@ -3,11 +3,11 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"total_count/internal/ui"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/theme"
-	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
@@ -20,10 +20,12 @@ func main() {
 
 	imgPath := imageFilePath("half_logo.png")
 	icon, _ := fyne.LoadResourceFromPath(imgPath)
-
 	myWindow.SetIcon(icon)
 
-	myWindow.SetContent(widget.NewLabel("Testing air toml"))
+	// Page navigation
+	splashPage := ui.SplashPage(myWindow)
+
+	myWindow.SetContent(splashPage)
 
 	myWindow.ShowAndRun()
 }
