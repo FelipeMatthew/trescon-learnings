@@ -1,0 +1,28 @@
+# air.toml
+
+# Pasta onde o executável será salvo
+bin = "bin/main"
+
+# Pasta para cache de recompilação
+tmp_dir = "tmp"
+
+[build]
+# Comando de build
+cmd = "go build -o ./bin/main ."
+
+# Parâmetros de compilação (opcional)
+include_ext = ["go", "tpl", "tmpl", "html", "css"]
+
+# Arquivos e diretórios a serem ignorados
+exclude_dir = ["assets", "tmp", "bin"]
+
+# Diretório com os arquivos fonte Go
+src_dir = ["."]
+
+[log]
+# Nível de log
+level = "debug"
+
+[run]
+# Comando para executar o binário após a compilação
+cmd = "./bin/main"
