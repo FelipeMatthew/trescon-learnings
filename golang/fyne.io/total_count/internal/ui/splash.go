@@ -29,8 +29,8 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 	logoImage.FillMode = canvas.ImageFillContain
 
 	navigateBtn := widget.NewButton("Continuar", func() {
-		homePage := HomePage(window)
-		window.SetContent(homePage)
+		uploadImagePage := UploadImagePage(window)
+		window.SetContent(uploadImagePage)
 	})
 
 	btnContainer := container.New(
