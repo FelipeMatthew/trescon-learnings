@@ -12,6 +12,12 @@ import (
 )
 
 func SplashPage(window fyne.Window) fyne.CanvasObject {
+
+	title := canvas.NewText("Total count", color.White)
+	title.Alignment = fyne.TextAlignCenter
+	title.TextStyle.Bold = true
+	title.TextSize = 30
+
 	text := canvas.NewText("Desenvolvido pela 3CON", color.White)
 	text.Alignment = fyne.TextAlignCenter
 	text.TextSize = 24
@@ -19,22 +25,30 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 	logoPath := services.GetImageFilePath("main-logo.png")
 
 	logoImage := canvas.NewImageFromFile(logoPath)
-	logoImage.SetMinSize(fyne.NewSize(200, 300))
+	logoImage.SetMinSize(fyne.NewSize(350, 150))
+	logoImage.FillMode = canvas.ImageFillContain
 
 	navigateBtn := widget.NewButton("Continuar", func() {
 		homePage := HomePage(window)
 		window.SetContent(homePage)
 	})
 
-	content := container.NewCenter(
-		container.NewVBox(
-			layout.NewSpacer(),
-			text,
-			logoImage,
-			layout.NewSpacer(),
-			navigateBtn,
-			layout.NewSpacer(),
-		),
+	btnContainer := container.New(
+		layout.NewHBoxLayout(),
+		layout.NewSpacer(),
+		navigateBtn,
+		layout.NewSpacer(),
+	)
+
+	content := container.NewVBox(
+		layout.NewSpacer(),
+		title,
+		text,
+		layout.NewSpacer(),
+		logoImage,
+		layout.NewSpacer(),
+		btnContainer,
+		layout.NewSpacer(),
 	)
 
 	return content
