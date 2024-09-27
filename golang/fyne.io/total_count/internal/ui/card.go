@@ -1,4 +1,4 @@
-package components
+package ui
 
 import (
 	"fmt"
@@ -8,9 +8,10 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
-func Card(prodCode, description string, qtd uint8, date time.Time) *fyne.Container {
+func Card(prodCode, description string, qtd uint8, date time.Time, window fyne.Window) *fyne.Container {
 
 	// Code
 	productCode := canvas.NewText(prodCode, color.White)
@@ -34,6 +35,12 @@ func Card(prodCode, description string, qtd uint8, date time.Time) *fyne.Contain
 	cardBackground := canvas.NewRectangle(color.RGBA{30, 30, 30, 255})
 	cardBackground.SetMinSize(fyne.NewSize(200, 100))
 
+	// Invisible btn
+	cardBtn := widget.NewButton("", func() {
+		window.SetContent(DashboardDataPage(window))
+	})
+	cardBtn.Importance = widget.LowImportance
+
 	cardContent := container.NewVBox(
 		productCode,
 		descriptionText,
@@ -44,6 +51,7 @@ func Card(prodCode, description string, qtd uint8, date time.Time) *fyne.Contain
 	card := container.NewStack(
 		cardBackground,
 		container.NewPadded(cardContent),
+		cardBtn,
 	)
 
 	return card
