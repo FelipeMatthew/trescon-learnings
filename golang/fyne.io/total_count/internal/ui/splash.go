@@ -18,7 +18,7 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 	title.TextStyle.Bold = true
 	title.TextSize = 30
 
-	text := canvas.NewText("Desenvolvido pela 3CON", color.White)
+	text := canvas.NewText("Desenvolvido por 3CON", color.White)
 	text.Alignment = fyne.TextAlignCenter
 	text.TextSize = 24
 

@@ -42,6 +42,7 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 			if confirm {
 				fmt.Println("Confirmed: true")
 				// TODO: convert image to base64 and send it to backend
+				window.SetContent(DashboardPage(window))
 			}
 		}, window)
 

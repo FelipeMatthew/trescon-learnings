@@ -2,7 +2,6 @@ package ui
 
 import (
 	"image/color"
-	"os/exec"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -34,15 +33,15 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 		// TODO: Criar função para gerar nome da imagem aleatóriamente
 		// TODO: Validação se há ou não camera disponível
 		// TODO: FIX IT
-		imageName := "/tmp/captured_image.png"
-		cmd := exec.Command("fswebcam", "--no-banner", imageName)
-		err := cmd.Run()
-		if err != nil {
-			dialog.ShowError(err, window)
-			return
-		}
+		// imageName := "/tmp/captured_image.png"
+		// cmd := exec.Command("fswebcam", "--no-banner", imageName)
+		// err := cmd.Run()
+		// if err != nil {
+		// 	dialog.ShowError(err, window)
+		// 	return
+		// }
 
-		window.SetContent(ImagePreviewPage(window, imageName))
+		// window.SetContent(ImagePreviewPage(window, imageName))
 	})
 
 	// TODO: Fix container layout
