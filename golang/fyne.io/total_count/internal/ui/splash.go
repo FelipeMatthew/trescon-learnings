@@ -51,5 +51,7 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 		layout.NewSpacer(),
 	)
 
+	services.FetchImagesData()
+
 	return content
 }
