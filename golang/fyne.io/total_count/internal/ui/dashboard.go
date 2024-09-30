@@ -2,12 +2,12 @@ package ui
 
 import (
 	"image/color"
-	"time"
+	"log"
+	"total_count/internal/services"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/layout"
 )
 
 func DashboardPage(window fyne.Window) fyne.CanvasObject {
@@ -16,27 +16,25 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 	titleText.TextSize = 24
 	titleText.TextStyle.Bold = true
 
-	// todo: make it dynamic
+	// Fetching API data
+	imageData, err := services.FetchImagesData()
+	if err != nil {
+		log.Printf("Erro ao buscar dados da API: %v", err)
+		return container.NewVBox(titleText, canvas.NewText("Erro ao carregar os dados", color.RGBA{255, 0, 0, 255}))
+	}
 
-	cardOne := Card("123", "Produto 01", 3, time.Now(), window)
-	cardTwo := Card("12ADV", "Produto 02", 255, time.Now(), window)
-	cardThree := Card("134DDAA", "Produto 03", 245, time.Now(), window)
-	cardFour := Card("13AD3", "Produto 04", 215, time.Now(), window)
-	cardFive := Card("1AVV93", "Produto 05", 245, time.Now(), window)
-	cardSix := Card("9D9AA", "Produto 06", 125, time.Now(), window)
+	// Slice para armazenar os cards
+
+	var cardList []fyne.CanvasObject
+
+	for _, image := range imageData {
+		// Criar os cards com base nos dados da API
+		card := Card(image.Code, image.Description, image.Count, image.Timestamp, window)
+		cardList = append(cardList, container.NewPadded(card))
+	}
 
 	cards := container.NewVBox(
-		container.NewGridWithColumns(3,
-			container.NewPadded(cardOne),
-			container.NewPadded(cardTwo),
-			container.NewPadded(cardThree),
-		),
-		layout.NewSpacer(),
-		container.NewGridWithColumns(3,
-			container.NewPadded(cardFour),
-			container.NewPadded(cardFive),
-			container.NewPadded(cardSix),
-		),
+		container.NewGridWithColumns(3, cardList...),
 	)
 
 	content := container.NewVBox(

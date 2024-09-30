@@ -19,6 +19,8 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 
 	folderIcon := widget.NewButtonWithIcon("Escolher imagem", theme.FolderIcon(), func() {
 
+		// TODO: Validar se retorno é imagem
+		// TODO: Converter imagem para base64
 		dialog.NewFileOpen(func(ufs fyne.URIReadCloser, err error) {
 			if err == nil || ufs != nil {
 				defer ufs.Close()
@@ -29,19 +31,8 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 		}, window).Show()
 	})
 
-	pictureIcon := widget.NewButtonWithIcon("Tirar foto", theme.MediaPhotoIcon(), func() {
-		// TODO: Criar função para gerar nome da imagem aleatóriamente
-		// TODO: Validação se há ou não camera disponível
-		// TODO: FIX IT
-		// imageName := "/tmp/captured_image.png"
-		// cmd := exec.Command("fswebcam", "--no-banner", imageName)
-		// err := cmd.Run()
-		// if err != nil {
-		// 	dialog.ShowError(err, window)
-		// 	return
-		// }
-
-		// window.SetContent(ImagePreviewPage(window, imageName))
+	pictureIcon := widget.NewButtonWithIcon("Dashboard", theme.ComputerIcon(), func() {
+		window.SetContent(DashboardPage(window))
 	})
 
 	// TODO: Fix container layout

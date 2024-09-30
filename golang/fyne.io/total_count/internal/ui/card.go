@@ -3,7 +3,6 @@ package ui
 import (
 	"fmt"
 	"image/color"
-	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -11,19 +10,19 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Card(prodCode, description string, qtd uint8, date time.Time, window fyne.Window) *fyne.Container {
+func Card(prodCode, description string, qtd int, timestamp string, window fyne.Window) *fyne.Container {
 
 	// Code
-	productCode := canvas.NewText(prodCode, color.White)
+	productCode := canvas.NewText(fmt.Sprintf("Código: %v", prodCode), color.White)
 	productCode.TextSize = 18
 	productCode.TextStyle.Bold = true
 
 	// Description
-	descriptionText := canvas.NewText(description, color.White)
+	descriptionText := canvas.NewText(fmt.Sprintf("Descrição: %v", description), color.White)
 	descriptionText.TextSize = 14
 
 	// Date
-	dataText := canvas.NewText(date.Format("02 Jan 2006"), color.White)
+	dataText := canvas.NewText(fmt.Sprintf("Data: %v", timestamp), color.White)
 	dataText.TextSize = 12
 	dataText.Color = color.RGBA{150, 150, 150, 255}
 
