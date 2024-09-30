@@ -3,6 +3,7 @@ package ui
 import (
 	"image/color"
 	"log"
+	"time"
 	"total_count/internal/services"
 
 	"fyne.io/fyne/v2"
@@ -16,30 +17,43 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 	titleText.TextSize = 24
 	titleText.TextStyle.Bold = true
 
-	// Fetching API data
-	imageData, err := services.FetchImagesData()
-	if err != nil {
-		log.Printf("Erro ao buscar dados da API: %v", err)
-		return container.NewVBox(titleText, canvas.NewText("Erro ao carregar os dados", color.RGBA{255, 0, 0, 255}))
+	cardsContainer := container.NewVBox()
+
+	realtimeData := func() {
+		// Fetching API data
+		imageData, err := services.FetchImagesData()
+		if err != nil {
+			log.Printf("Erro ao buscar dados da API: %v", err)
+			return
+		}
+
+		cardsContainer.Objects = nil
+
+		// Slice para armazenar os cards
+		var cardList []fyne.CanvasObject
+		for _, image := range imageData {
+			// Criar os cards com base nos dados da API
+			card := Card(image.Code, image.Description, image.Count, image.Timestamp, window)
+			cardList = append(cardList, container.NewPadded(card))
+		}
+
+		cardsContainer.Add(container.NewGridWithColumns(3, cardList...))
+		cardsContainer.Refresh()
 	}
 
-	// Slice para armazenar os cards
+	// Faz um gorotine que vai pegar e consultar a api a cada 5 segundos e trazer os dados atualizados
+	refreshApiReq := time.NewTicker(10 * time.Second)
+	go func() {
+		for range refreshApiReq.C {
+			realtimeData()
+		}
+	}()
 
-	var cardList []fyne.CanvasObject
-
-	for _, image := range imageData {
-		// Criar os cards com base nos dados da API
-		card := Card(image.Code, image.Description, image.Count, image.Timestamp, window)
-		cardList = append(cardList, container.NewPadded(card))
-	}
-
-	cards := container.NewVBox(
-		container.NewGridWithColumns(3, cardList...),
-	)
+	realtimeData()
 
 	content := container.NewVBox(
 		titleText,
-		cards,
+		cardsContainer,
 	)
 
 	return content
