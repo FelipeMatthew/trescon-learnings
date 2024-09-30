@@ -27,6 +27,7 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 			return
 		}
 
+		// TODO: Exibir texto de card vazio / voltar para parte de inserir imagem
 		cardsContainer.Objects = nil
 
 		// Slice para armazenar os cards
@@ -42,6 +43,7 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 	}
 
 	// Faz um gorotine que vai pegar e consultar a api a cada 5 segundos e trazer os dados atualizados
+	// TODO: aprofundar estudos em go func
 	refreshApiReq := time.NewTicker(10 * time.Second)
 	go func() {
 		for range refreshApiReq.C {
