@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"log"
-	"total_count/internal/services"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -25,7 +25,7 @@ func Card(prodCode, description string, qtd int, timestamp string, window fyne.W
 
 	// Date
 	// Converter timestamp
-	formattedTime, err := services.TimestampToDateTime(timestamp)
+	formattedTime, err := utils.TimestampToDateTime(timestamp)
 	if err != nil {
 		log.Printf("Erro ao converter timestamp: %v", err)
 	}

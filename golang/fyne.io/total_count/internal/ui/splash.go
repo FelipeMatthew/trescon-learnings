@@ -3,6 +3,7 @@ package ui
 import (
 	"image/color"
 	"total_count/internal/services"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -22,7 +23,7 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 	text.Alignment = fyne.TextAlignCenter
 	text.TextSize = 24
 
-	logoPath := services.GetImageFilePath("main-logo.png")
+	logoPath := utils.GetImageFilePath("main-logo.png")
 
 	logoImage := canvas.NewImageFromFile(logoPath)
 	logoImage.SetMinSize(fyne.NewSize(350, 150))

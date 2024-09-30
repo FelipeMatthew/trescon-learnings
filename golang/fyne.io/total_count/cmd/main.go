@@ -1,8 +1,8 @@
 package main
 
 import (
-	"total_count/internal/services"
 	"total_count/internal/ui"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -15,7 +15,7 @@ func main() {
 	myWindow.Resize(fyne.NewSize(700, 500))
 	myWindow.CenterOnScreen()
 
-	imgPath := services.GetImageFilePath("half_logo.png")
+	imgPath := utils.GetImageFilePath("half_logo.png")
 	icon, _ := fyne.LoadResourceFromPath(imgPath)
 	myWindow.SetIcon(icon)
 
