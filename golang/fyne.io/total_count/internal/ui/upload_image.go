@@ -1,7 +1,9 @@
 package ui
 
 import (
+	"fmt"
 	"image/color"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -24,7 +26,25 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 		dialog.NewFileOpen(func(ufs fyne.URIReadCloser, err error) {
 			if err == nil || ufs != nil {
 				defer ufs.Close()
+
 				imgPath := ufs.URI().Path()
+
+				validExtensions := []string{".png", ".jpg", ".jpeg"}
+				isValidImage := false
+
+				for _, ext := range validExtensions {
+					// Valida se no caminho da imagem tem sufixo indicado acima
+					// 1. string para ser validada, 2. o parametro
+					if strings.HasSuffix(strings.ToLower(imgPath), ext) {
+						isValidImage = true
+						break
+					}
+				}
+
+				if !isValidImage {
+					dialog.ShowError(fmt.Errorf("arquivo inválido. Apenas imagens png e jpg são aceitas."), window)
+					return
+				}
 
 				window.SetContent(ImagePreviewPage(window, imgPath))
 			}

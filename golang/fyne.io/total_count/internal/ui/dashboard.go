@@ -4,7 +4,7 @@ import (
 	"image/color"
 	"log"
 	"time"
-	"total_count/internal/services"
+	"total_count/internal/api/services"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"

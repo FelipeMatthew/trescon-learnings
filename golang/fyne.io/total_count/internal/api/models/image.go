@@ -1,5 +1,6 @@
 package models
 
+// Get all images
 type ImageData struct {
 	UID                string                 `json:"uid"`
 	Code               string                 `json:"code"`
@@ -20,6 +21,14 @@ type Coordinates struct {
 	H int `json:"h"`
 }
 
+// Post image
+type CountItems struct {
+	Code        string `json:"code"`
+	Description string `json:"description"`
+	Image       string `json:"image"` // BASE64 image
+}
+
+// Update Image
 type EditImage struct {
 	UID         string                 `json:"uid"`
 	Coordinates map[string]Coordinates `json:"coordinates"`

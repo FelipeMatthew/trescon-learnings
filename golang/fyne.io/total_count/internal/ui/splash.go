@@ -2,7 +2,7 @@ package ui
 
 import (
 	"image/color"
-	"total_count/internal/services"
+	"total_count/internal/api/services"
 	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
@@ -52,7 +52,7 @@ func SplashPage(window fyne.Window) fyne.CanvasObject {
 		layout.NewSpacer(),
 	)
 
-	services.FetchImagesData()
+	services.PostImage()
 
 	return content
 }
