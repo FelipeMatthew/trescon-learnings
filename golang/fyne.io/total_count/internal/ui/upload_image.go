@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"strings"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -21,7 +22,6 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 
 	folderIcon := widget.NewButtonWithIcon("Escolher imagem", theme.FolderIcon(), func() {
 
-		// TODO: Validar se retorno é imagem
 		// TODO: Converter imagem para base64
 		dialog.NewFileOpen(func(ufs fyne.URIReadCloser, err error) {
 			if err == nil || ufs != nil {
@@ -42,9 +42,17 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 				}
 
 				if !isValidImage {
-					dialog.ShowError(fmt.Errorf("arquivo inválido. Apenas imagens png e jpg são aceitas."), window)
+					dialog.ShowError(fmt.Errorf("arquivo inválido, apenas imagens png e jpg são aceitas"), window)
 					return
 				}
+
+				base64Image, err := utils.ConvertImageToBase64(imgPath)
+				if err != nil {
+					dialog.ShowError(fmt.Errorf("erro ao converter a imagem: %v", err), window)
+					return
+				}
+
+				fmt.Println(base64Image)
 
 				window.SetContent(ImagePreviewPage(window, imgPath))
 			}
