@@ -9,7 +9,7 @@ import (
 	"total_count/internal/api/routes"
 )
 
-func PostImage(code, description, base64Image string) error {
+func PostImage(code, description, base64Image string) (*models.CountItemsResponse, error) {
 	// cria os dados com base nos parametros
 	item := models.CountItems{
 		Code:        code,
@@ -20,7 +20,7 @@ func PostImage(code, description, base64Image string) error {
 	// obj to json
 	itemJson, err := json.Marshal(item)
 	if err != nil {
-		return fmt.Errorf("error ao converter obj para json: %v", err)
+		return nil, fmt.Errorf("error ao converter obj para json: %v", err)
 	}
 
 	// API URL
@@ -28,17 +28,18 @@ func PostImage(code, description, base64Image string) error {
 
 	response, err := http.Post(countImageRoute, "application/json", bytes.NewBuffer(itemJson))
 	if err != nil {
-		return fmt.Errorf("erro ao fazer requisição: %v", err)
+		return nil, fmt.Errorf("erro ao fazer requisição: %v", err)
 	}
 	defer response.Body.Close()
 
 	if response.StatusCode != http.StatusOK {
-		return fmt.Errorf("falha ao enviar imagem: %v", response.StatusCode)
+		return nil, fmt.Errorf("falha ao enviar imagem: %v", response.StatusCode)
 	}
 
-	var serverResult map[string]interface{}
+	var serverResult models.CountItemsResponse
 	json.NewDecoder(response.Body).Decode(&serverResult)
+
 	fmt.Println("Server result: ", serverResult)
 
-	return nil
+	return &serverResult, nil
 }

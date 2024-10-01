@@ -42,7 +42,6 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 			widget.NewFormItem("Descrição", description),
 		}, func(confirm bool) {
 			if confirm {
-				fmt.Println("Confirmed: true")
 
 				base64Image, err := utils.ConvertImageToBase64(imagePath)
 				if err != nil {
@@ -50,9 +49,15 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 					return
 				}
 
-				services.PostImage(prodCode.Text, description.Text, base64Image)
+				imageData, err := services.PostImage(prodCode.Text, description.Text, base64Image)
+				if err != nil {
+					dialog.ShowError(fmt.Errorf("erro ao salvar dados: %v", err), window)
+					return
+				}
 
-				window.SetContent(DashboardPage(window))
+				fmt.Println(imageData)
+
+				window.SetContent(DisplayPictureScreen(window))
 			}
 		}, window)
 

@@ -28,6 +28,16 @@ type CountItems struct {
 	Image       string `json:"image"` // BASE64 image
 }
 
+// Repsonse posted image
+type CountItemsResponse struct {
+	UID         string                 `json:"uid"`
+	Count       int                    `json:"count"`
+	ImagePath   string                 `json:"image_path"`
+	Coordinates map[string]Coordinates `json:"coordinates"`
+	Confidence  int                    `json:"confidence"`
+	Message     string                 `json:"message"`
+}
+
 // Update Image
 type EditImage struct {
 	UID         string                 `json:"uid"`
