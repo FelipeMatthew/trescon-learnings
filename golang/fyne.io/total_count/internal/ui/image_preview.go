@@ -54,10 +54,7 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 					dialog.ShowError(fmt.Errorf("erro ao salvar dados: %v", err), window)
 					return
 				}
-
-				fmt.Println(imageData)
-
-				window.SetContent(DisplayPictureScreen(window))
+				window.SetContent(DisplayPictureScreen(imageData.ImagePath, imageData.Count, imageData.Confidence, window))
 			}
 		}, window)
 
