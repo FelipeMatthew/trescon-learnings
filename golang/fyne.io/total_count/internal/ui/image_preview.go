@@ -3,6 +3,8 @@ package ui
 import (
 	"fmt"
 	"image/color"
+	"total_count/internal/api/services"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -41,7 +43,15 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 		}, func(confirm bool) {
 			if confirm {
 				fmt.Println("Confirmed: true")
-				// TODO: convert image to base64 and send it to backend
+
+				base64Image, err := utils.ConvertImageToBase64(imagePath)
+				if err != nil {
+					dialog.ShowError(fmt.Errorf("erro ao converter a imagem: %v", err), window)
+					return
+				}
+
+				services.PostImage(prodCode.Text, description.Text, base64Image)
+
 				window.SetContent(DashboardPage(window))
 			}
 		}, window)

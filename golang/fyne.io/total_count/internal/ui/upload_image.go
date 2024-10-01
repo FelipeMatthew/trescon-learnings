@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"image/color"
 	"strings"
-	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -45,14 +44,6 @@ func UploadImagePage(window fyne.Window) fyne.CanvasObject {
 					dialog.ShowError(fmt.Errorf("arquivo inválido, apenas imagens png e jpg são aceitas"), window)
 					return
 				}
-
-				base64Image, err := utils.ConvertImageToBase64(imgPath)
-				if err != nil {
-					dialog.ShowError(fmt.Errorf("erro ao converter a imagem: %v", err), window)
-					return
-				}
-
-				fmt.Println(base64Image)
 
 				window.SetContent(ImagePreviewPage(window, imgPath))
 			}
