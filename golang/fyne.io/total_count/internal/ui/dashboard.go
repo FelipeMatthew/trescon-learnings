@@ -9,6 +9,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/widget"
 )
 
 func DashboardPage(window fyne.Window) fyne.CanvasObject {
@@ -19,6 +21,10 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 
 	cardsContainer := container.NewVBox()
 
+	returnBtn := widget.NewButtonWithIcon("Voltar", theme.NavigateBackIcon(), func() {
+		window.SetContent(UploadImagePage(window))
+	})
+
 	realtimeData := func() {
 		// Fetching API data
 		imageData, err := services.FetchImagesData()
@@ -27,7 +33,7 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 			return
 		}
 
-		// TODO: Exibir texto de card vazio / voltar para parte de inserir imagem
+		// TODO: Exibir texto de card vazio
 		cardsContainer.Objects = nil
 
 		// Slice para armazenar os cards
@@ -54,7 +60,10 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 	realtimeData()
 
 	content := container.NewVBox(
-		titleText,
+		container.NewHBox(
+			returnBtn,
+			titleText,
+		),
 		cardsContainer,
 	)
 
