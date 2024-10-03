@@ -7,7 +7,7 @@ type ImageData struct {
 	Description        string                 `json:"description"`
 	Timestamp          string                 `json:"timestamp"`
 	Count              int                    `json:"count"`
-	Confidence         int                    `json:"confidence"`
+	Confidence         float64                `json:"confidence"`
 	RawImagePath       string                 `json:"raw_image_path"`
 	PredictedImagePath string                 `json:"predicted_image_path"`
 	EditedImagePath    string                 `json:"edited_image_path"`
@@ -34,7 +34,7 @@ type CountItemsResponse struct {
 	Count       int                    `json:"count"`
 	ImagePath   string                 `json:"image_path"`
 	Coordinates map[string]Coordinates `json:"coordinates"`
-	Confidence  int                    `json:"confidence"`
+	Confidence  float64                `json:"confidence"`
 	Message     string                 `json:"message"`
 }
 

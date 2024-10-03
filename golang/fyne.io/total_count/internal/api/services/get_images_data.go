@@ -74,7 +74,7 @@ func FetchImagesData() ([]models.ImageData, error) {
 			Description:        fmt.Sprintf("%v", imageMap["description"]),
 			Timestamp:          fmt.Sprintf("%v", imageMap["timestamp"]),
 			Count:              int(imageMap["count"].(float64)),
-			Confidence:         int(imageMap["confidence"].(float64)),
+			Confidence:         imageMap["confidence"].(float64),
 			RawImagePath:       fmt.Sprintf("%v", imageMap["raw_image_path"]),
 			PredictedImagePath: fmt.Sprintf("%v", imageMap["predicted_image_path"]),
 			EditedImagePath:    fmt.Sprintf("%v", imageMap["edited_image_path"]),
