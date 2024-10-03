@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"fmt"
 	"image/color"
 
 	"fyne.io/fyne/v2"
@@ -9,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/layout"
 )
 
-func DashboardDataPage(window fyne.Window) fyne.CanvasObject {
+func DashboardDataPage(uid string, window fyne.Window) fyne.CanvasObject {
 
 	originalImgText := canvas.NewText("Imagem original:", color.White)
 	originalImgText.TextStyle.Bold = true
@@ -17,7 +18,7 @@ func DashboardDataPage(window fyne.Window) fyne.CanvasObject {
 
 	// todo: show image
 
-	processedImgText := canvas.NewText("Imagem processada:", color.White)
+	processedImgText := canvas.NewText(fmt.Sprintf("O MEU UID: %v", uid), color.White)
 	processedImgText.TextStyle.Bold = true
 	processedImgText.TextSize = 14
 

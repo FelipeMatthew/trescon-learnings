@@ -14,7 +14,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Card(prodCode, description string, qtd int, timestamp string, window fyne.Window) *fyne.Container {
+func Card(prodCode, description string, qtd int, timestamp string, uid string, window fyne.Window) *fyne.Container {
 
 	// Code
 	productCode := canvas.NewText(fmt.Sprintf("Código: %v", prodCode), color.White)
@@ -46,7 +46,7 @@ func Card(prodCode, description string, qtd int, timestamp string, window fyne.W
 
 	// Invisible btn
 	cardBtn := widget.NewButtonWithIcon("", theme.SearchIcon(), func() {
-		window.SetContent(DashboardDataPage(window))
+		window.SetContent(DashboardDataPage(uid, window))
 	})
 
 	cardContent := container.NewVBox(

@@ -40,7 +40,7 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 		var cardList []fyne.CanvasObject
 		for _, image := range imageData {
 			// Criar os cards com base nos dados da API
-			card := Card(image.Code, image.Description, image.Count, image.Timestamp, window)
+			card := Card(image.Code, image.Description, image.Count, image.Timestamp, image.UID, window)
 			cardList = append(cardList, container.NewPadded(card))
 		}
 
