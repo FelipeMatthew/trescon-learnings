@@ -44,7 +44,7 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 			cardList = append(cardList, container.NewPadded(card))
 		}
 
-		cardsContainer.Add(container.NewGridWithColumns(3, cardList...))
+		cardsContainer.Add(container.NewGridWithColumns(2, cardList...))
 		cardsContainer.Refresh()
 	}
 
@@ -59,12 +59,15 @@ func DashboardPage(window fyne.Window) fyne.CanvasObject {
 
 	realtimeData()
 
+	verticalContainer := container.NewVScroll(cardsContainer)
+	verticalContainer.SetMinSize(fyne.NewSize(700, 470))
+
 	content := container.NewVBox(
 		container.NewHBox(
 			returnBtn,
 			titleText,
 		),
-		cardsContainer,
+		verticalContainer,
 	)
 
 	return content

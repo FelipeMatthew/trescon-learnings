@@ -86,7 +86,5 @@ func FetchImagesData() ([]models.ImageData, error) {
 		return imageList[i].Timestamp > imageList[j].Timestamp
 	})
 
-	fmt.Print(imageList)
-
 	return imageList, nil
 }

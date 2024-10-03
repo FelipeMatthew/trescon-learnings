@@ -55,8 +55,6 @@ func ImagePreviewPage(window fyne.Window, imagePath string) fyne.CanvasObject {
 					return
 				}
 
-				fmt.Printf("TEXTO CONFIANÇA: %v", imageData.Confidence)
-
 				window.SetContent(DisplayPictureScreen(imageData.ImagePath, imageData.Count, imageData.Confidence, window))
 			}
 		}, window)

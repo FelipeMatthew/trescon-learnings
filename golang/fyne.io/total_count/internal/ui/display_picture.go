@@ -19,7 +19,6 @@ import (
 func DisplayPictureScreen(imagePath string, count int, confidence float64, window fyne.Window) fyne.CanvasObject {
 
 	httpImagePath := fmt.Sprintf("http://%v", imagePath)
-	fmt.Println(httpImagePath)
 
 	imageResp, err := http.Get(httpImagePath)
 	if err != nil {

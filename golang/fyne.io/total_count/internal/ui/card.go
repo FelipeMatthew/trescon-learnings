@@ -9,6 +9,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -21,7 +23,7 @@ func Card(prodCode, description string, qtd int, timestamp string, window fyne.W
 
 	// Description
 	descriptionText := canvas.NewText(fmt.Sprintf("Descrição: %v", description), color.White)
-	descriptionText.TextSize = 14
+	descriptionText.TextSize = 16
 
 	// Date
 	// Converter timestamp
@@ -31,7 +33,7 @@ func Card(prodCode, description string, qtd int, timestamp string, window fyne.W
 	}
 
 	dataText := canvas.NewText(fmt.Sprintf("Data de criação: %v", formattedTime), color.White)
-	dataText.TextSize = 12
+	dataText.TextSize = 14
 	dataText.Color = color.RGBA{150, 150, 150, 255}
 
 	// QTD
@@ -40,25 +42,31 @@ func Card(prodCode, description string, qtd int, timestamp string, window fyne.W
 
 	// Card
 	cardBackground := canvas.NewRectangle(color.RGBA{30, 30, 30, 255})
-	cardBackground.SetMinSize(fyne.NewSize(200, 100))
+	cardBackground.SetMinSize(fyne.NewSize(250, 150))
 
 	// Invisible btn
-	cardBtn := widget.NewButton("", func() {
+	cardBtn := widget.NewButtonWithIcon("", theme.SearchIcon(), func() {
 		window.SetContent(DashboardDataPage(window))
 	})
-	cardBtn.Importance = widget.LowImportance
 
 	cardContent := container.NewVBox(
 		productCode,
+		layout.NewSpacer(),
 		descriptionText,
+		layout.NewSpacer(),
+
 		quantityText,
 		dataText,
+
+		container.NewHBox(
+			layout.NewSpacer(),
+			cardBtn,
+		),
 	)
 
 	card := container.NewStack(
 		cardBackground,
 		container.NewPadded(cardContent),
-		cardBtn,
 	)
 
 	return card

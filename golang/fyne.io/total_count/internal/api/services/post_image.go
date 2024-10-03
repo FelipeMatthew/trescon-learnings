@@ -39,7 +39,5 @@ func PostImage(code, description, base64Image string) (*models.CountItemsRespons
 	var serverResult models.CountItemsResponse
 	json.NewDecoder(response.Body).Decode(&serverResult)
 
-	fmt.Println("Server result: ", serverResult)
-
 	return &serverResult, nil
 }
