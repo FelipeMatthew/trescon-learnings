@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"image/color"
 	"log"
+	"total_count/internal/api/models"
 	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
@@ -14,20 +15,20 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func Card(prodCode, description string, qtd int, timestamp string, uid string, window fyne.Window) *fyne.Container {
+func Card(imageData models.ImageData, window fyne.Window) *fyne.Container {
 
 	// Code
-	productCode := canvas.NewText(fmt.Sprintf("Código: %v", prodCode), color.White)
+	productCode := canvas.NewText(fmt.Sprintf("Código: %v", imageData.Code), color.White)
 	productCode.TextSize = 18
 	productCode.TextStyle.Bold = true
 
 	// Description
-	descriptionText := canvas.NewText(fmt.Sprintf("Descrição: %v", description), color.White)
+	descriptionText := canvas.NewText(fmt.Sprintf("Descrição: %v", imageData.Description), color.White)
 	descriptionText.TextSize = 16
 
 	// Date
 	// Converter timestamp
-	formattedTime, err := utils.TimestampToDateTime(timestamp)
+	formattedTime, err := utils.TimestampToDateTime(imageData.Timestamp)
 	if err != nil {
 		log.Printf("Erro ao converter timestamp: %v", err)
 	}
@@ -37,7 +38,7 @@ func Card(prodCode, description string, qtd int, timestamp string, uid string, w
 	dataText.Color = color.RGBA{150, 150, 150, 255}
 
 	// QTD
-	quantityText := canvas.NewText(fmt.Sprintf("Quantidade encontrada: %v", qtd), color.White)
+	quantityText := canvas.NewText(fmt.Sprintf("Quantidade encontrada: %v", imageData.Count), color.White)
 	quantityText.TextSize = 12
 
 	// Card
@@ -46,7 +47,7 @@ func Card(prodCode, description string, qtd int, timestamp string, uid string, w
 
 	// Invisible btn
 	cardBtn := widget.NewButtonWithIcon("", theme.SearchIcon(), func() {
-		window.SetContent(DashboardDataPage(uid, window))
+		window.SetContent(DashboardDataPage(imageData, window))
 	})
 
 	cardContent := container.NewVBox(
