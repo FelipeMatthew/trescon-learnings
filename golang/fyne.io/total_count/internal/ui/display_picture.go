@@ -3,10 +3,8 @@ package ui
 import (
 	"fmt"
 	"image/color"
-	"io"
 	"log"
-	"net/http"
-	"os"
+	"total_count/internal/utils"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -18,31 +16,12 @@ import (
 
 func DisplayPictureScreen(imagePath string, count int, confidence float64, window fyne.Window) fyne.CanvasObject {
 
-	httpImagePath := fmt.Sprintf("http://%v", imagePath)
-
-	imageResp, err := http.Get(httpImagePath)
+	predictedImage, err := utils.GetImageFromHttp(imagePath)
 	if err != nil {
-		log.Fatal(err)
-	}
-	defer imageResp.Body.Close()
-
-	// trabalhando com imagem temporária
-	if imageResp.StatusCode != 200 {
-		log.Fatalf("erro ao buscar imagem, erro: %d", err)
+		log.Printf("erro: %v", predictedImage)
 	}
 
-	tempFile, err := os.CreateTemp("", "image-*.png")
-	if err != nil {
-		log.Fatalf("erro ao criar arquivo temporario: %d", err)
-	}
-	defer os.Remove(tempFile.Name())
-
-	_, err = io.Copy(tempFile, imageResp.Body)
-	if err != nil {
-		log.Fatalf("erro ao copiar arquivo temporario: %d", err)
-	}
-
-	image := canvas.NewImageFromFile(tempFile.Name())
+	image := canvas.NewImageFromFile(predictedImage)
 	image.SetMinSize(fyne.NewSize(300, 300))
 	image.FillMode = canvas.ImageFillContain
 
